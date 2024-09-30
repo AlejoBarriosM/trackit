@@ -52,6 +52,15 @@ export namespace $Enums {
 export type ProductStatus = (typeof ProductStatus)[keyof typeof ProductStatus]
 
 
+export const WarehouseStatus: {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  ARCHIVED: 'ARCHIVED'
+};
+
+export type WarehouseStatus = (typeof WarehouseStatus)[keyof typeof WarehouseStatus]
+
+
 export const UserRole: {
   USER: 'USER',
   ADMIN: 'ADMIN'
@@ -90,6 +99,10 @@ export type MovementStatus = (typeof MovementStatus)[keyof typeof MovementStatus
 export type ProductStatus = $Enums.ProductStatus
 
 export const ProductStatus: typeof $Enums.ProductStatus
+
+export type WarehouseStatus = $Enums.WarehouseStatus
+
+export const WarehouseStatus: typeof $Enums.WarehouseStatus
 
 export type UserRole = $Enums.UserRole
 
@@ -2442,18 +2455,27 @@ export namespace Prisma {
     id: string | null
     name: string | null
     location: string | null
+    status: $Enums.WarehouseStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type WarehouseMaxAggregateOutputType = {
     id: string | null
     name: string | null
     location: string | null
+    status: $Enums.WarehouseStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type WarehouseCountAggregateOutputType = {
     id: number
     name: number
     location: number
+    status: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -2462,18 +2484,27 @@ export namespace Prisma {
     id?: true
     name?: true
     location?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type WarehouseMaxAggregateInputType = {
     id?: true
     name?: true
     location?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type WarehouseCountAggregateInputType = {
     id?: true
     name?: true
     location?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -2553,6 +2584,9 @@ export namespace Prisma {
     id: string
     name: string
     location: string
+    status: $Enums.WarehouseStatus
+    createdAt: Date
+    updatedAt: Date
     _count: WarehouseCountAggregateOutputType | null
     _min: WarehouseMinAggregateOutputType | null
     _max: WarehouseMaxAggregateOutputType | null
@@ -2576,6 +2610,9 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     location?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     InventoryMovement?: boolean | Warehouse$InventoryMovementArgs<ExtArgs>
     _count?: boolean | WarehouseCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["warehouse"]>
@@ -2584,12 +2621,18 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     location?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["warehouse"]>
 
   export type WarehouseSelectScalar = {
     id?: boolean
     name?: boolean
     location?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
   export type WarehouseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2607,6 +2650,9 @@ export namespace Prisma {
       id: string
       name: string
       location: string
+      status: $Enums.WarehouseStatus
+      createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["warehouse"]>
     composites: {}
   }
@@ -3004,6 +3050,9 @@ export namespace Prisma {
     readonly id: FieldRef<"Warehouse", 'String'>
     readonly name: FieldRef<"Warehouse", 'String'>
     readonly location: FieldRef<"Warehouse", 'String'>
+    readonly status: FieldRef<"Warehouse", 'WarehouseStatus'>
+    readonly createdAt: FieldRef<"Warehouse", 'DateTime'>
+    readonly updatedAt: FieldRef<"Warehouse", 'DateTime'>
   }
     
 
@@ -6421,7 +6470,10 @@ export namespace Prisma {
   export const WarehouseScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    location: 'location'
+    location: 'location',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type WarehouseScalarFieldEnum = (typeof WarehouseScalarFieldEnum)[keyof typeof WarehouseScalarFieldEnum]
@@ -6565,6 +6617,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'WarehouseStatus'
+   */
+  export type EnumWarehouseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WarehouseStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'WarehouseStatus[]'
+   */
+  export type ListEnumWarehouseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WarehouseStatus[]'>
     
 
 
@@ -6716,6 +6782,9 @@ export namespace Prisma {
     id?: StringFilter<"Warehouse"> | string
     name?: StringFilter<"Warehouse"> | string
     location?: StringFilter<"Warehouse"> | string
+    status?: EnumWarehouseStatusFilter<"Warehouse"> | $Enums.WarehouseStatus
+    createdAt?: DateTimeFilter<"Warehouse"> | Date | string
+    updatedAt?: DateTimeFilter<"Warehouse"> | Date | string
     InventoryMovement?: MovementListRelationFilter
   }
 
@@ -6723,6 +6792,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     location?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     InventoryMovement?: MovementOrderByRelationAggregateInput
   }
 
@@ -6733,6 +6805,9 @@ export namespace Prisma {
     NOT?: WarehouseWhereInput | WarehouseWhereInput[]
     name?: StringFilter<"Warehouse"> | string
     location?: StringFilter<"Warehouse"> | string
+    status?: EnumWarehouseStatusFilter<"Warehouse"> | $Enums.WarehouseStatus
+    createdAt?: DateTimeFilter<"Warehouse"> | Date | string
+    updatedAt?: DateTimeFilter<"Warehouse"> | Date | string
     InventoryMovement?: MovementListRelationFilter
   }, "id">
 
@@ -6740,6 +6815,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     location?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: WarehouseCountOrderByAggregateInput
     _max?: WarehouseMaxOrderByAggregateInput
     _min?: WarehouseMinOrderByAggregateInput
@@ -6752,6 +6830,9 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Warehouse"> | string
     name?: StringWithAggregatesFilter<"Warehouse"> | string
     location?: StringWithAggregatesFilter<"Warehouse"> | string
+    status?: EnumWarehouseStatusWithAggregatesFilter<"Warehouse"> | $Enums.WarehouseStatus
+    createdAt?: DateTimeWithAggregatesFilter<"Warehouse"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Warehouse"> | Date | string
   }
 
   export type UserWhereInput = {
@@ -7076,6 +7157,9 @@ export namespace Prisma {
     id?: string
     name: string
     location: string
+    status?: $Enums.WarehouseStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
     InventoryMovement?: MovementCreateNestedManyWithoutWarehouseInput
   }
 
@@ -7083,6 +7167,9 @@ export namespace Prisma {
     id?: string
     name: string
     location: string
+    status?: $Enums.WarehouseStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
     InventoryMovement?: MovementUncheckedCreateNestedManyWithoutWarehouseInput
   }
 
@@ -7090,6 +7177,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
+    status?: EnumWarehouseStatusFieldUpdateOperationsInput | $Enums.WarehouseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     InventoryMovement?: MovementUpdateManyWithoutWarehouseNestedInput
   }
 
@@ -7097,6 +7187,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
+    status?: EnumWarehouseStatusFieldUpdateOperationsInput | $Enums.WarehouseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     InventoryMovement?: MovementUncheckedUpdateManyWithoutWarehouseNestedInput
   }
 
@@ -7104,18 +7197,27 @@ export namespace Prisma {
     id?: string
     name: string
     location: string
+    status?: $Enums.WarehouseStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type WarehouseUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
+    status?: EnumWarehouseStatusFieldUpdateOperationsInput | $Enums.WarehouseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type WarehouseUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
+    status?: EnumWarehouseStatusFieldUpdateOperationsInput | $Enums.WarehouseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateInput = {
@@ -7581,6 +7683,13 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type EnumWarehouseStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.WarehouseStatus | EnumWarehouseStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WarehouseStatus[] | ListEnumWarehouseStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WarehouseStatus[] | ListEnumWarehouseStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWarehouseStatusFilter<$PrismaModel> | $Enums.WarehouseStatus
+  }
+
   export type MovementListRelationFilter = {
     every?: MovementWhereInput
     some?: MovementWhereInput
@@ -7595,18 +7704,37 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     location?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type WarehouseMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     location?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type WarehouseMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     location?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumWarehouseStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WarehouseStatus | EnumWarehouseStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WarehouseStatus[] | ListEnumWarehouseStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WarehouseStatus[] | ListEnumWarehouseStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWarehouseStatusWithAggregatesFilter<$PrismaModel> | $Enums.WarehouseStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWarehouseStatusFilter<$PrismaModel>
+    _max?: NestedEnumWarehouseStatusFilter<$PrismaModel>
   }
 
   export type EnumUserRoleFilter<$PrismaModel = never> = {
@@ -7902,6 +8030,10 @@ export namespace Prisma {
     connectOrCreate?: MovementCreateOrConnectWithoutWarehouseInput | MovementCreateOrConnectWithoutWarehouseInput[]
     createMany?: MovementCreateManyWarehouseInputEnvelope
     connect?: MovementWhereUniqueInput | MovementWhereUniqueInput[]
+  }
+
+  export type EnumWarehouseStatusFieldUpdateOperationsInput = {
+    set?: $Enums.WarehouseStatus
   }
 
   export type MovementUpdateManyWithoutWarehouseNestedInput = {
@@ -8257,6 +8389,23 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumWarehouseStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.WarehouseStatus | EnumWarehouseStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WarehouseStatus[] | ListEnumWarehouseStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WarehouseStatus[] | ListEnumWarehouseStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWarehouseStatusFilter<$PrismaModel> | $Enums.WarehouseStatus
+  }
+
+  export type NestedEnumWarehouseStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WarehouseStatus | EnumWarehouseStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WarehouseStatus[] | ListEnumWarehouseStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WarehouseStatus[] | ListEnumWarehouseStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWarehouseStatusWithAggregatesFilter<$PrismaModel> | $Enums.WarehouseStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWarehouseStatusFilter<$PrismaModel>
+    _max?: NestedEnumWarehouseStatusFilter<$PrismaModel>
+  }
+
   export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
@@ -8499,12 +8648,18 @@ export namespace Prisma {
     id?: string
     name: string
     location: string
+    status?: $Enums.WarehouseStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type WarehouseUncheckedCreateWithoutInventoryMovementInput = {
     id?: string
     name: string
     location: string
+    status?: $Enums.WarehouseStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type WarehouseCreateOrConnectWithoutInventoryMovementInput = {
@@ -8584,12 +8739,18 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
+    status?: EnumWarehouseStatusFieldUpdateOperationsInput | $Enums.WarehouseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type WarehouseUncheckedUpdateWithoutInventoryMovementInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
+    status?: EnumWarehouseStatusFieldUpdateOperationsInput | $Enums.WarehouseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUpsertWithoutMovementInput = {

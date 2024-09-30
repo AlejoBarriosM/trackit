@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 async function main() {
     const adminEmail = 'admin@trackit.com'
-    const adminPassword = 'admin' // Considera usar una variable de entorno para esto
+    const adminPassword = process.env.PASS_ADMIN?.toString() || 'defaultPassword'
 
     const existingAdmin = await prisma.user.findUnique({
         where: { email: adminEmail },

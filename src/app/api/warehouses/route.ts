@@ -1,7 +1,5 @@
-// /app/api/products/route.ts
-
 import { NextResponse } from 'next/server';
-import { createProduct, getAllProducts, getProductById, updateProduct, getProductByRef } from '@/lib/model/productModel';
+import { createWarehouse, getAllWarehouses, getWarehouseById, updateWarehouse, getWarehouseByName } from '@/lib/model/warehouseModel';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]/route';
 
@@ -13,17 +11,17 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
-    const ref = searchParams.get('ref');
+    const name = searchParams.get('name');
 
     if (id) {
-        const product = await getProductById(id);
-        return NextResponse.json(product);
-    } else if (ref) {
-        const product = await getProductByRef(ref);
-        return NextResponse.json({ exists: !!product });
+        const warehouse = await getWarehouseById(id);
+        return NextResponse.json(warehouse);
+    } else if (name) {
+        const warehouse = await getWarehouseByName(name);
+        return NextResponse.json({ exists: !!warehouse });
     } else {
-        const products = await getAllProducts();
-        return NextResponse.json(products);
+        const warehouses = await getAllWarehouses();
+        return NextResponse.json(warehouses);
     }
 }
 
@@ -34,13 +32,13 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { name, description, ref, stock, price, cost, status } = body;
+    const { name, location, status } = body;
 
     try {
-        const product = await createProduct(name, description, ref, stock, price, cost, status);
-        return NextResponse.json(product);
+        const warehouse = await createWarehouse(name, location, status);
+        return NextResponse.json(warehouse);
     } catch (error) {
-        return NextResponse.json({ error: 'Error creating product' }, { status: 500 });
+        return NextResponse.json({ error: 'Error creating warehouse' }, { status: 500 });
     }
 }
 
@@ -54,9 +52,9 @@ export async function PUT(request: Request) {
     const { id, ...data } = body;
 
     try {
-        const product = await updateProduct(id, data);
-        return NextResponse.json(product);
+        const warehouse = await updateWarehouse(id, data);
+        return NextResponse.json(warehouse);
     } catch (error) {
-        return NextResponse.json({ error: 'Error updating product' }, { status: 500 });
+        return NextResponse.json({ error: 'Error updating warehouse' }, { status: 500 });
     }
 }

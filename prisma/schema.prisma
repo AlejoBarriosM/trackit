@@ -35,6 +35,12 @@ enum MovementStatus {
   REJECTED
 }
 
+enum WarehouseStatus {
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
 model Product {
   id          String        @id @default(cuid())
   name        String
@@ -51,9 +57,12 @@ model Product {
 }
 
 model Warehouse {
-  id       String @id @default(cuid())
-  name     String
-  location String
+  id        String          @id @default(cuid())
+  name      String
+  location  String
+  status    WarehouseStatus @default(ACTIVE)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 
   InventoryMovement Movement[]
 }

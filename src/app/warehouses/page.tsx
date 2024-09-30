@@ -1,5 +1,3 @@
-// /app/products/page.tsx
-
 'use client'
 
 import React, { useState, useEffect, useMemo } from 'react'
@@ -25,32 +23,28 @@ import {
 import { PlusCircle, Pencil, Archive, ChevronUp, ChevronDown, Search } from 'lucide-react'
 import { useToast } from "@/hooks/use-toast"
 
-// Importación dinámica del componente ProductForm
-const ProductForm = dynamic(() => import('./ProductForm'), { ssr: false })
+// Importación dinámica del componente WarehouseForm
+const WarehouseForm = dynamic(() => import('./WarehouseForm'), { ssr: false })
 
-type Product = {
+type Warehouse = {
     id: string
     name: string
-    description: string | null
-    ref: string
-    stock: number
-    price: number
-    cost: number
+    location: string
     status: 'ACTIVE' | 'INACTIVE' | 'ARCHIVED'
 }
 
 type SortConfig = {
-    key: keyof Product
+    key: keyof Warehouse
     direction: 'asc' | 'desc'
 }
 
-export default function ProductsPage() {
-    const [products, setProducts] = useState<Product[]>([])
+export default function WarehousesPage() {
+    const [warehouses, setWarehouses] = useState<Warehouse[]>([])
     const [isDialogOpen, setIsDialogOpen] = useState(false)
-    const [currentProduct, setCurrentProduct] = useState<Product | null>(null)
+    const [currentWarehouse, setCurrentWarehouse] = useState<Warehouse | null>(null)
     const [showExitConfirmation, setShowExitConfirmation] = useState(false)
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
-    const [productToDelete, setProductToDelete] = useState<Product | null>(null)
+    const [warehouseToDelete, setWarehouseToDelete] = useState<Warehouse | null>(null)
     const [isClient, setIsClient] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
     const [sortConfig, setSortConfig] = useState<SortConfig>({ key: 'name', direction: 'asc' })
@@ -58,15 +52,15 @@ export default function ProductsPage() {
 
     useEffect(() => {
         setIsClient(true)
-        fetchProducts()
+        fetchWarehouses()
     }, [])
 
-    const fetchProducts = async () => {
+    const fetchWarehouses = async () => {
         try {
-            const response = await fetch('/api/products')
-            if (!response.ok) throw new Error('No se pudieron cargar los productos')
+            const response = await fetch('/api/warehouses')
+            if (!response.ok) throw new Error('No se pudieron cargar las bodegas')
             const data = await response.json()
-            setProducts(data)
+            setWarehouses(data)
         } catch (error) {
             if (error instanceof Error) {
                 toast({
@@ -78,19 +72,19 @@ export default function ProductsPage() {
         }
     }
 
-    const handleAddProduct = async (productData: Omit<Product, 'id'>) => {
+    const handleAddWarehouse = async (warehouseData: Omit<Warehouse, 'id'>) => {
         try {
-            const response = await fetch('/api/products', {
+            const response = await fetch('/api/warehouses', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(productData),
+                body: JSON.stringify(warehouseData),
             })
-            if (!response.ok) throw new Error('No se pudo agregar el producto')
-            await fetchProducts()
+            if (!response.ok) throw new Error('No se pudo agregar la bodega')
+            await fetchWarehouses()
             setIsDialogOpen(false)
             toast({
                 title: "Éxito",
-                description: "Producto agregado correctamente",
+                description: "Bodega agregada correctamente",
             })
         } catch (error) {
             if (error instanceof Error) {
@@ -103,22 +97,22 @@ export default function ProductsPage() {
         }
     }
 
-    const handleEditProduct = async (productData: Omit<Product, 'id'>) => {
-        if (!currentProduct) return
+    const handleEditWarehouse = async (warehouseData: Omit<Warehouse, 'id'>) => {
+        if (!currentWarehouse) return
 
         try {
-            const response = await fetch(`/api/products`, {
+            const response = await fetch(`/api/warehouses`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: currentProduct.id, ...productData }),
+                body: JSON.stringify({ id: currentWarehouse.id, ...warehouseData }),
             })
-            if (!response.ok) throw new Error('No se pudo actualizar el producto')
-            await fetchProducts()
+            if (!response.ok) throw new Error('No se pudo actualizar la bodega')
+            await fetchWarehouses()
             setIsDialogOpen(false)
-            setCurrentProduct(null)
+            setCurrentWarehouse(null)
             toast({
                 title: "Éxito",
-                description: "Producto actualizado correctamente",
+                description: "Bodega actualizada correctamente",
             })
         } catch (error) {
             if (error instanceof Error) {
@@ -131,36 +125,27 @@ export default function ProductsPage() {
         }
     }
 
-    const handleDeleteProduct = async (product: Product) => {
-        if (product.stock !== 0) {
-            toast({
-                title: "Error",
-                description: "No se puede eliminar un producto con stock disponible",
-                variant: "destructive",
-            })
-            return
-        }
-
-        setProductToDelete(product)
+    const handleDeleteWarehouse = async (warehouse: Warehouse) => {
+        setWarehouseToDelete(warehouse)
         setShowDeleteConfirmation(true)
     }
 
-    const confirmDeleteProduct = async () => {
-        if (!productToDelete) return
+    const confirmDeleteWarehouse = async () => {
+        if (!warehouseToDelete) return
 
         try {
-            const response = await fetch(`/api/products`, {
+            const response = await fetch(`/api/warehouses`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: productToDelete.id, status: 'ARCHIVED' }),
+                body: JSON.stringify({ id: warehouseToDelete.id, status: 'ARCHIVED' }),
             })
-            if (!response.ok) throw new Error('No se pudo archivar el producto')
-            await fetchProducts()
+            if (!response.ok) throw new Error('No se pudo archivar la bodega')
+            await fetchWarehouses()
             setShowDeleteConfirmation(false)
-            setProductToDelete(null)
+            setWarehouseToDelete(null)
             toast({
                 title: "Éxito",
-                description: "Producto archivado correctamente",
+                description: "Bodega archivada correctamente",
             })
         } catch (error) {
             if (error instanceof Error) {
@@ -178,38 +163,38 @@ export default function ProductsPage() {
             setShowExitConfirmation(true)
         } else {
             setIsDialogOpen(false)
-            setCurrentProduct(null)
+            setCurrentWarehouse(null)
         }
     }
 
     const handleConfirmExit = () => {
         setShowExitConfirmation(false)
         setIsDialogOpen(false)
-        setCurrentProduct(null)
+        setCurrentWarehouse(null)
     }
 
-    const handleSort = (key: keyof Product) => {
+    const handleSort = (key: keyof Warehouse) => {
         setSortConfig(prevConfig => ({
             key,
             direction: prevConfig.key === key && prevConfig.direction === 'asc' ? 'desc' : 'asc'
         }))
     }
 
-    const filteredAndSortedProducts = useMemo(() => {
-        return products
-            .filter(product =>
-                product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                product.ref.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                product.status.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredAndSortedWarehouses = useMemo(() => {
+        return warehouses
+            .filter(warehouse =>
+                warehouse.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                warehouse.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                warehouse.status.toLowerCase().includes(searchTerm.toLowerCase())
             )
             .sort((a, b) => {
-                const aValue = a[sortConfig.key] as string | number;
-                const bValue = b[sortConfig.key] as string | number;
+                const aValue = a[sortConfig.key];
+                const bValue = b[sortConfig.key];
                 if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
                 if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
                 return 0;
             })
-    }, [products, searchTerm, sortConfig])
+    }, [warehouses, searchTerm, sortConfig])
 
     if (!isClient) {
         return <div>Cargando...</div>
@@ -218,20 +203,20 @@ export default function ProductsPage() {
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold">Gestión de Productos</h1>
+                <h1 className="text-2xl font-bold">Gestión de Bodegas</h1>
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogTrigger asChild>
-                        <Button onClick={() => setCurrentProduct(null)}>
-                            <PlusCircle className="mr-2 h-4 w-4" /> Agregar Producto
+                        <Button onClick={() => setCurrentWarehouse(null)}>
+                            <PlusCircle className="mr-2 h-4 w-4" /> Agregar Bodega
                         </Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
-                            <DialogTitle>{currentProduct ? 'Editar Producto' : 'Agregar Producto'}</DialogTitle>
+                            <DialogTitle>{currentWarehouse ? 'Editar Bodega' : 'Agregar Bodega'}</DialogTitle>
                         </DialogHeader>
-                        <ProductForm
-                            product={currentProduct}
-                            onSubmit={currentProduct ? handleEditProduct : handleAddProduct}
+                        <WarehouseForm
+                            warehouse={currentWarehouse}
+                            onSubmit={currentWarehouse ? handleEditWarehouse : handleAddWarehouse}
                             onClose={handleCloseDialog}
                         />
                     </DialogContent>
@@ -241,7 +226,7 @@ export default function ProductsPage() {
                 <div className="relative">
                     <Input
                         type="text"
-                        placeholder="Buscar productos..."
+                        placeholder="Buscar bodegas..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="pl-10"
@@ -255,17 +240,8 @@ export default function ProductsPage() {
                         <TableHead onClick={() => handleSort('name')} className="cursor-pointer">
                             Nombre {sortConfig.key === 'name' && (sortConfig.direction === 'asc' ? <ChevronUp className="inline" /> : <ChevronDown className="inline" />)}
                         </TableHead>
-                        <TableHead onClick={() => handleSort('ref')} className="cursor-pointer">
-                            Referencia {sortConfig.key === 'ref' && (sortConfig.direction === 'asc' ? <ChevronUp className="inline" /> : <ChevronDown className="inline" />)}
-                        </TableHead>
-                        <TableHead onClick={() => handleSort('stock')} className="cursor-pointer">
-                            Stock {sortConfig.key === 'stock' && (sortConfig.direction === 'asc' ? <ChevronUp className="inline" /> : <ChevronDown className="inline" />)}
-                        </TableHead>
-                        <TableHead onClick={() => handleSort('price')} className="cursor-pointer">
-                            Precio {sortConfig.key === 'price' && (sortConfig.direction === 'asc' ? <ChevronUp className="inline" /> : <ChevronDown className="inline" />)}
-                        </TableHead>
-                        <TableHead onClick={() => handleSort('cost')} className="cursor-pointer">
-                            Costo {sortConfig.key === 'cost' && (sortConfig.direction === 'asc' ? <ChevronUp className="inline" /> : <ChevronDown className="inline" />)}
+                        <TableHead onClick={() => handleSort('location')} className="cursor-pointer">
+                            Ubicación {sortConfig.key === 'location' && (sortConfig.direction === 'asc' ? <ChevronUp className="inline" /> : <ChevronDown className="inline" />)}
                         </TableHead>
                         <TableHead onClick={() => handleSort('status')} className="cursor-pointer">
                             Estado {sortConfig.key === 'status' && (sortConfig.direction === 'asc' ? <ChevronUp className="inline" /> : <ChevronDown className="inline" />)}
@@ -274,22 +250,19 @@ export default function ProductsPage() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {filteredAndSortedProducts.map((product) => (
-                        <TableRow key={product.id}>
-                            <TableCell>{product.name}</TableCell>
-                            <TableCell>{product.ref}</TableCell>
-                            <TableCell>{product.stock}</TableCell>
-                            <TableCell>${product.price.toFixed(2)}</TableCell>
-                            <TableCell>${product.cost.toFixed(2)}</TableCell>
-                            <TableCell>{product.status}</TableCell>
+                    {filteredAndSortedWarehouses.map((warehouse) => (
+                        <TableRow key={warehouse.id}>
+                            <TableCell>{warehouse.name}</TableCell>
+                            <TableCell>{warehouse.location}</TableCell>
+                            <TableCell>{warehouse.status}</TableCell>
                             <TableCell>
                                 <Button variant="ghost" size="sm" onClick={() => {
-                                    setCurrentProduct(product)
+                                    setCurrentWarehouse(warehouse)
                                     setIsDialogOpen(true)
                                 }}>
                                     <Pencil className="h-4 w-4" />
                                 </Button>
-                                <Button variant="ghost" size="sm" onClick={() => handleDeleteProduct(product)}>
+                                <Button variant="ghost" size="sm" onClick={() => handleDeleteWarehouse(warehouse)}>
                                     <Archive className="h-4 w-4" />
                                 </Button>
                             </TableCell>
@@ -312,12 +285,12 @@ export default function ProductsPage() {
             <Dialog open={showDeleteConfirmation} onOpenChange={setShowDeleteConfirmation}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>¿Estás seguro de que quieres archivar este producto?</DialogTitle>
+                        <DialogTitle>¿Estás seguro de que quieres archivar esta bodega?</DialogTitle>
                     </DialogHeader>
-                    <p>Esta acción cambiará el estado del producto a &#39;Archivado&#39;.</p>
+                    <p>Esta acción cambiará el estado de la bodega a &#39;Archivado&#39;.</p>
                     <DialogFooter>
                         <Button variant="outline" onClick={() => setShowDeleteConfirmation(false)}>Cancelar</Button>
-                        <Button onClick={confirmDeleteProduct}>Archivar</Button>
+                        <Button onClick={confirmDeleteWarehouse}>Archivar</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

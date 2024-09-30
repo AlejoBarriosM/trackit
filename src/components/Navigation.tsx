@@ -66,6 +66,9 @@ export function Navigation() {
                                         <DropdownMenuItem>
                                             <Link href="/users">Usuarios</Link>
                                         </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <Link href="/warehouses">Bodegas</Link>
+                                        </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             )}

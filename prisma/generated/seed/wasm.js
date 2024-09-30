@@ -138,7 +138,10 @@ exports.Prisma.ProductScalarFieldEnum = {
 exports.Prisma.WarehouseScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  location: 'location'
+  location: 'location',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -189,6 +192,12 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 exports.ProductStatus = exports.$Enums.ProductStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  ARCHIVED: 'ARCHIVED'
+};
+
+exports.WarehouseStatus = exports.$Enums.WarehouseStatus = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
   ARCHIVED: 'ARCHIVED'
