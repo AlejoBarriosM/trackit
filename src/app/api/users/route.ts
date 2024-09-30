@@ -1,9 +1,9 @@
-// /app/api/users/route.ts
+// /app/api/users/[...nextauth].ts
 
 import { NextResponse } from 'next/server';
 import { createUser, getAllUsers, getUserById, updateUser, deleteUser } from '@/lib/model/userModel';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '../auth/[...nextauth]';
 
 export async function GET(request: Request) {
     const session = await getServerSession(authOptions);

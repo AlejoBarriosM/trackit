@@ -1,9 +1,9 @@
-// /app/api/products/route.ts
+// /app/api/products/[...nextauth].ts
 
 import { NextResponse } from 'next/server';
 import { createProduct, getAllProducts, getProductById, updateProduct, getProductByRef } from '@/lib/model/productModel';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '../auth/[...nextauth]';
 
 export async function GET(request: Request) {
     const session = await getServerSession(authOptions);

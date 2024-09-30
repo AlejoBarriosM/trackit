@@ -2,7 +2,7 @@ import './globals.css'
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import {getServerSession} from "next-auth/next"
-import {authOptions} from "./api/auth/[...nextauth]/route"
+import {authOptions} from "./api/auth/[...nextauth]"
 import SessionProvider from "@/components/SessionProvider"
 import {Navigation} from '@/components/Navigation'
 import {ThemeProvider} from "@/components/theme-provider"

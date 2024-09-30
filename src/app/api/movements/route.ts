@@ -1,9 +1,9 @@
-// /app/api/movements/route.ts
+// /app/api/movements/[...nextauth].ts
 
 import { NextResponse } from 'next/server';
 import { createMovement, getAllMovements, getMovementById, updateMovement } from '@/lib/model/MovementModel';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '../auth/[...nextauth]';
 import { MovementType, MovementStatus } from '@prisma/client';
 
 export async function GET(request: Request) {
