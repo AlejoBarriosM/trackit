@@ -205,7 +205,6 @@ exports.WarehouseStatus = exports.$Enums.WarehouseStatus = {
 
 exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER',
-  CUSTOMER: 'CUSTOMER',
   ADMIN: 'ADMIN'
 };
 

@@ -1,5 +1,33 @@
+-- Eliminar llaves foráneas de MovementDetail
+ALTER TABLE "MovementDetail" DROP CONSTRAINT IF EXISTS "MovementDetail_movementId_fkey";
+ALTER TABLE "MovementDetail" DROP CONSTRAINT IF EXISTS "MovementDetail_productId_fkey";
+
+-- Eliminar llaves foráneas de Movement
+ALTER TABLE "Movement" DROP CONSTRAINT IF EXISTS "Movement_warehouseId_fkey";
+ALTER TABLE "Movement" DROP CONSTRAINT IF EXISTS "Movement_userId_fkey";
+
+-- Eliminar índices
+DROP INDEX IF EXISTS "Product_ref_key";
+DROP INDEX IF EXISTS "User_email_key";
+
+-- Eliminar tablas
+DROP TABLE IF EXISTS "MovementDetail";
+DROP TABLE IF EXISTS "Movement";
+DROP TABLE IF EXISTS "User";
+DROP TABLE IF EXISTS "Warehouse";
+DROP TABLE IF EXISTS "Product";
+
+-- Eliminar tipos enumerados
+DROP TYPE IF EXISTS "UserRole";
+DROP TYPE IF EXISTS "UserStatus";
+DROP TYPE IF EXISTS "ProductStatus";
+DROP TYPE IF EXISTS "MovementType";
+DROP TYPE IF EXISTS "MovementStatus";
+DROP TYPE IF EXISTS "WarehouseStatus";
+
+
 -- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('USER', 'CUSTOMER', 'ADMIN');
+CREATE TYPE "UserRole" AS ENUM ('USER', 'ADMIN');
 
 -- CreateEnum
 CREATE TYPE "UserStatus" AS ENUM ('ACTIVE', 'INACTIVE');
