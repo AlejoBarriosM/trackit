@@ -52,13 +52,16 @@ export const authOptions: NextAuthOptions = {
         },
         async session({ session, token }) {
             if (session?.user) {
-                session.user.role = token.role as string;
+                session.user.id = token.sub!;
+                session.user.role = token.role;
             }
             return session;
         }
     },
     pages: {
         signIn: '/login',
+        signOut: '/',
+        error: '/login'
     },
 };
 
