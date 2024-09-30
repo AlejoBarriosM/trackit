@@ -1,11 +1,13 @@
 'use client'
 
 import React from 'react'
+import dynamic from 'next/dynamic';
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import { Button } from "@/components/ui/button"
 import { useRouter, usePathname } from 'next/navigation'
 import { useTheme } from "next-themes"
+
 import { Moon, Sun, Settings } from "lucide-react"
 import {
     DropdownMenu,
@@ -19,6 +21,9 @@ export function Navigation() {
     const router = useRouter()
     const pathname = usePathname()
     const { theme, setTheme } = useTheme()
+    const DynamicMoonIcon = dynamic(() => import('lucide-react').then((mod) => mod.Moon), {
+        ssr: false,
+    });
 
     const handleSignOut = async () => {
         await signOut({ redirect: false })
@@ -79,17 +84,8 @@ export function Navigation() {
                     ) : (
                         <NavLink href="/login">Iniciar sesión</NavLink>
                     )}
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={toggleTheme}
-                        aria-label="Cambiar tema"
-                    >
-                        {theme === "dark" ? (
-                            <Sun className="h-5 w-5" />
-                        ) : (
-                            <Moon className="h-5 w-5" />
-                        )}
+                    <Button variant="ghost" size="icon">
+                        <DynamicMoonIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                     </Button>
                 </div>
             </div>

@@ -63,6 +63,7 @@ export type WarehouseStatus = (typeof WarehouseStatus)[keyof typeof WarehouseSta
 
 export const UserRole: {
   USER: 'USER',
+  CUSTOMER: 'CUSTOMER',
   ADMIN: 'ADMIN'
 };
 

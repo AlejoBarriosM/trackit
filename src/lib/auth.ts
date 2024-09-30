@@ -1,9 +1,10 @@
+// src/lib/auth.ts
+
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import { getUserByEmail, verifyPassword } from "@/lib/model/userModel";
-import NextAuth from "next-auth/next";
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -60,10 +61,6 @@ export const authOptions: NextAuthOptions = {
     },
     pages: {
         signIn: '/login',
-        signOut: '/',
         error: '/login'
     },
 };
-
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };

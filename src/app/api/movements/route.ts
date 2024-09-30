@@ -3,7 +3,7 @@
 import { NextResponse } from 'next/server';
 import { createMovement, getAllMovements, getMovementById, updateMovement } from '@/lib/model/MovementModel';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../auth/[...nextauth]';
+import { authOptions } from '@/lib/auth';
 import { MovementType, MovementStatus } from '@prisma/client';
 
 export async function GET(request: Request) {
