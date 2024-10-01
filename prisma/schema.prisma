@@ -4,8 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  //directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url      = env("POSTGRES_PRISMA_URL")
 }
 
 enum UserRole {
@@ -34,6 +33,11 @@ enum MovementStatus {
   PENDING
   APPROVED
   REJECTED
+}
+
+enum DocumentStatus {
+  ACTIVE
+  INACTIVE
 }
 
 enum WarehouseStatus {
@@ -65,7 +69,7 @@ model Warehouse {
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
 
-  InventoryMovement Movement[]
+  Document Document[]
 }
 
 model User {
@@ -82,18 +86,17 @@ model User {
 }
 
 model Movement {
-  id          String         @id @default(cuid())
-  warehouse   Warehouse      @relation(fields: [warehouseId], references: [id])
-  warehouseId String
-  totalCost   Float
-  user        User           @relation(fields: [userId], references: [id])
-  userId      String
-  type        MovementType
-  status      MovementStatus
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  id        String         @id @default(cuid())
+  totalCost Float
+  user      User           @relation(fields: [userId], references: [id])
+  userId    String
+  status    MovementStatus
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
 
   MovementDetail MovementDetail[]
+
+  Consecutive Consecutive[]
 }
 
 model MovementDetail {
@@ -105,6 +108,32 @@ model MovementDetail {
   quantity   Int
   cost       Float
   price      Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Document {
+  id          String         @id @default(cuid())
+  name        String
+  prefix      String
+  consecutive Int
+  warehouse   Warehouse      @relation(fields: [warehouseId], references: [id])
+  warehouseId String
+  type        MovementType
+  status      DocumentStatus @default(ACTIVE)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  Consecutive Consecutive[]
+}
+
+model Consecutive {
+  id         String   @id @default(cuid())
+  idDocument String   @unique
+  document   Document @relation(fields: [documentId], references: [id])
+  documentId String
+  movement   Movement @relation(fields: [movementId], references: [id])
+  movementId String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }

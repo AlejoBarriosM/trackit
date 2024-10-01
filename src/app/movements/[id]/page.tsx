@@ -13,15 +13,25 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
 import { useToast } from "@/hooks/use-toast"
-import { MovementType, MovementStatus } from '@prisma/client'
+import { MovementStatus, MovementType } from '@prisma/client'
 
 type Movement = {
     id?: string
-    warehouseId: string
-    type: MovementType
+    userId: string
     status: MovementStatus
     totalCost: number
+    warehouseId: string
+    documentId: string
+    type: MovementType
     details: {
         productId: string
         quantity: number
@@ -35,20 +45,32 @@ type Warehouse = {
     name: string
 }
 
+type Document = {
+    id: string
+    name: string
+    prefix: string
+    type: MovementType
+}
+
 type Product = {
     id: string
     name: string
+    stock: number
+    price: number
 }
 
 export default function MovementForm({ params }: { params: { id: string } }) {
     const [movement, setMovement] = useState<Movement>({
-        warehouseId: '',
-        type: MovementType.IN,
+        userId: '',
         status: MovementStatus.DRAFT,
         totalCost: 0,
-        details: []
+        warehouseId: '',
+        documentId: '',
+        type: MovementType.IN,
+        details: [{ productId: '', quantity: 0, cost: 0, price: 0 }]
     })
     const [warehouses, setWarehouses] = useState<Warehouse[]>([])
+    const [documents, setDocuments] = useState<Document[]>([])
     const [products, setProducts] = useState<Product[]>([])
     const router = useRouter()
     const { toast } = useToast()
@@ -67,6 +89,9 @@ export default function MovementForm({ params }: { params: { id: string } }) {
             if (!response.ok) throw new Error('No se pudo cargar el movimiento')
             const data = await response.json()
             setMovement(data)
+            if (data.warehouseId) {
+                fetchDocuments(data.warehouseId)
+            }
         } catch (error) {
             if (error instanceof Error) {
                 toast({
@@ -84,6 +109,23 @@ export default function MovementForm({ params }: { params: { id: string } }) {
             if (!response.ok) throw new Error('No se pudieron cargar las bodegas')
             const data = await response.json()
             setWarehouses(data)
+        } catch (error) {
+            if (error instanceof Error) {
+                toast({
+                    title: "Error",
+                    description: error.message,
+                    variant: "destructive",
+                })
+            }
+        }
+    }
+
+    const fetchDocuments = async (warehouseId: string) => {
+        try {
+            const response = await fetch(`/api/documents?warehouseId=${warehouseId}`)
+            if (!response.ok) throw new Error('No se pudieron cargar los documentos')
+            const data = await response.json()
+            setDocuments(data)
         } catch (error) {
             if (error instanceof Error) {
                 toast({
@@ -115,8 +157,8 @@ export default function MovementForm({ params }: { params: { id: string } }) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            if (!movement.warehouseId) {
-                throw new Error('Debe seleccionar una bodega')
+            if (!movement.warehouseId || !movement.documentId) {
+                throw new Error('Debe seleccionar una bodega y un documento')
             }
             if (movement.details.length === 0) {
                 throw new Error('Debe agregar al menos un detalle al movimiento')
@@ -129,15 +171,12 @@ export default function MovementForm({ params }: { params: { id: string } }) {
                 if (detail.quantity <= 0) {
                     throw new Error(`La cantidad debe ser mayor que 0 para el detalle ${index + 1}`)
                 }
-                if (detail.cost < 0) {
+                if (movement.type === MovementType.IN && detail.cost < 0) {
                     throw new Error(`El costo no puede ser negativo para el detalle ${index + 1}`)
-                }
-                if (detail.price < 0) {
-                    throw new Error(`El precio no puede ser negativo para el detalle ${index + 1}`)
                 }
             })
 
-            const totalCost = movement.details.reduce((sum, detail) => sum + (detail.quantity * detail.cost), 0)
+            const totalCost = movement.details.reduce((sum, detail) => sum + (detail.quantity * (movement.type === MovementType.IN ? detail.cost : detail.price)), 0)
 
             const movementData = {
                 ...movement,
@@ -174,6 +213,18 @@ export default function MovementForm({ params }: { params: { id: string } }) {
         }
     }
 
+    const handleWarehouseChange = (warehouseId: string) => {
+        setMovement({ ...movement, warehouseId, documentId: '' })
+        fetchDocuments(warehouseId)
+    }
+
+    const handleDocumentChange = (documentId: string) => {
+        const selectedDocument = documents.find(doc => doc.id === documentId)
+        if (selectedDocument) {
+            setMovement({ ...movement, documentId, type: selectedDocument.type })
+        }
+    }
+
     const handleDetailChange = (index: number, field: string, value: string | number) => {
         const newDetails = [...movement.details]
         newDetails[index] = { ...newDetails[index], [field]: value }
@@ -196,7 +247,7 @@ export default function MovementForm({ params }: { params: { id: string } }) {
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-2xl font-bold mb-6">{params.id === 'new' ? 'Nuevo Movimiento' : 'Editar Movimiento'}</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
-                <Select onValueChange={(value) => setMovement({ ...movement, warehouseId: value })}>
+                <Select onValueChange={handleWarehouseChange}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Seleccionar Bodega" />
                     </SelectTrigger>
@@ -207,13 +258,14 @@ export default function MovementForm({ params }: { params: { id: string } }) {
                     </SelectContent>
                 </Select>
 
-                <Select onValueChange={(value) => setMovement({ ...movement, type: value as MovementType })}>
+                <Select onValueChange={handleDocumentChange} disabled={!movement.warehouseId}>
                     <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Tipo de Movimiento" />
+                        <SelectValue placeholder="Seleccionar Documento" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value={MovementType.IN}>Entrada</SelectItem>
-                        <SelectItem value={MovementType.OUT}>Salida</SelectItem>
+                        {documents.map((document) => (
+                            <SelectItem key={document.id} value={document.id}>{`${document.prefix} - ${document.name}`}</SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
 
@@ -230,42 +282,68 @@ export default function MovementForm({ params }: { params: { id: string } }) {
                 </Select>
 
                 <h2 className="text-xl font-semibold mt-4 mb-2">Detalles del Movimiento</h2>
-                {movement.details.map((detail, index) => (
-                    <div key={index} className="space-y-2 p-4 border rounded">
-                        <Select onValueChange={(value) => handleDetailChange(index, 'productId', value)}>
-                            <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Seleccionar Producto" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {products.map((product) => (
-                                    <SelectItem key={product.id} value={product.id}>{product.name}</SelectItem>
-                                    ))}
-                            </SelectContent>
-                        </Select>
-                        <Input
-                            type="number"
-                            value={detail.quantity}
-                            onChange={(e) => handleDetailChange(index, 'quantity', parseInt(e.target.value))}
-                            placeholder="Cantidad"
-                        />
-                        <Input
-                            type="number"
-                            value={detail.cost}
-                            onChange={(e) => handleDetailChange(index, 'cost', parseFloat(e.target.value))}
-                            placeholder="Costo"
-                        />
-                        <Input
-                            type="number"
-                            value={detail.price}
-                            onChange={(e) => handleDetailChange(index, 'price', parseFloat(e.target.value))}
-                            placeholder="Precio"
-                        />
-                        <Button type="button" onClick={() => removeDetail(index)} variant="destructive">
-                            Eliminar Detalle
-                        </Button>
-                    </div>
-                ))}
-                <Button type="button" onClick={addDetail}>Agregar Detalle</Button>
+                <Button type="button" onClick={addDetail} className="mb-4">Agregar Detalle</Button>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Producto</TableHead>
+                            <TableHead>Cantidad</TableHead>
+                            {movement.type === MovementType.IN && <TableHead>Costo</TableHead>}
+                            <TableHead>Precio</TableHead>
+                            <TableHead>Acciones</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {movement.details.map((detail, index) => (
+                            <TableRow key={index}>
+                                <TableCell>
+                                    <Select onValueChange={(value) => handleDetailChange(index, 'productId', value)}>
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Seleccionar Producto" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {products.map((product) => (
+                                                <SelectItem key={product.id} value={product.id}>{product.name}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </TableCell>
+                                <TableCell>
+                                    <Input
+                                        type="number"
+                                        value={detail.quantity}
+                                        onChange={(e) => handleDetailChange(index, 'quantity', parseInt(e.target.value))}
+                                        placeholder="Cantidad"
+                                    />
+                                </TableCell>
+                                {movement.type === MovementType.IN && (
+                                    <TableCell>
+                                        <Input
+                                            type="number"
+                                            value={detail.cost}
+                                            onChange={(e) => handleDetailChange(index, 'cost', parseFloat(e.target.value))}
+                                            placeholder="Costo"
+                                        />
+                                    </TableCell>
+                                )}
+                                <TableCell>
+                                    <Input
+                                        type="number"
+                                        value={detail.price}
+                                        onChange={(e) => handleDetailChange(index, 'price', parseFloat(e.target.value))}
+                                        placeholder="Precio"
+                                        disabled={movement.type === MovementType.OUT}
+                                    />
+                                </TableCell>
+                                <TableCell>
+                                    <Button type="button" onClick={() => removeDetail(index)} variant="destructive">
+                                        Eliminar
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
                 <Button type="submit" className="mt-4">Guardar Movimiento</Button>
             </form>
         </div>

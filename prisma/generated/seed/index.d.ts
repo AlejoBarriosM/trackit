@@ -38,6 +38,16 @@ export type Movement = $Result.DefaultSelection<Prisma.$MovementPayload>
  * 
  */
 export type MovementDetail = $Result.DefaultSelection<Prisma.$MovementDetailPayload>
+/**
+ * Model Document
+ * 
+ */
+export type Document = $Result.DefaultSelection<Prisma.$DocumentPayload>
+/**
+ * Model Consecutive
+ * 
+ */
+export type Consecutive = $Result.DefaultSelection<Prisma.$ConsecutivePayload>
 
 /**
  * Enums
@@ -77,14 +87,6 @@ export const UserStatus: {
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
 
 
-export const MovementType: {
-  IN: 'IN',
-  OUT: 'OUT'
-};
-
-export type MovementType = (typeof MovementType)[keyof typeof MovementType]
-
-
 export const MovementStatus: {
   DRAFT: 'DRAFT',
   PENDING: 'PENDING',
@@ -93,6 +95,22 @@ export const MovementStatus: {
 };
 
 export type MovementStatus = (typeof MovementStatus)[keyof typeof MovementStatus]
+
+
+export const MovementType: {
+  IN: 'IN',
+  OUT: 'OUT'
+};
+
+export type MovementType = (typeof MovementType)[keyof typeof MovementType]
+
+
+export const DocumentStatus: {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+};
+
+export type DocumentStatus = (typeof DocumentStatus)[keyof typeof DocumentStatus]
 
 }
 
@@ -112,13 +130,17 @@ export type UserStatus = $Enums.UserStatus
 
 export const UserStatus: typeof $Enums.UserStatus
 
+export type MovementStatus = $Enums.MovementStatus
+
+export const MovementStatus: typeof $Enums.MovementStatus
+
 export type MovementType = $Enums.MovementType
 
 export const MovementType: typeof $Enums.MovementType
 
-export type MovementStatus = $Enums.MovementStatus
+export type DocumentStatus = $Enums.DocumentStatus
 
-export const MovementStatus: typeof $Enums.MovementStatus
+export const DocumentStatus: typeof $Enums.DocumentStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -292,6 +314,26 @@ export class PrismaClient<
     * ```
     */
   get movementDetail(): Prisma.MovementDetailDelegate<ExtArgs>;
+
+  /**
+   * `prisma.document`: Exposes CRUD operations for the **Document** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Documents
+    * const documents = await prisma.document.findMany()
+    * ```
+    */
+  get document(): Prisma.DocumentDelegate<ExtArgs>;
+
+  /**
+   * `prisma.consecutive`: Exposes CRUD operations for the **Consecutive** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Consecutives
+    * const consecutives = await prisma.consecutive.findMany()
+    * ```
+    */
+  get consecutive(): Prisma.ConsecutiveDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -737,7 +779,9 @@ export namespace Prisma {
     Warehouse: 'Warehouse',
     User: 'User',
     Movement: 'Movement',
-    MovementDetail: 'MovementDetail'
+    MovementDetail: 'MovementDetail',
+    Document: 'Document',
+    Consecutive: 'Consecutive'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -753,7 +797,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "product" | "warehouse" | "user" | "movement" | "movementDetail"
+      modelProps: "product" | "warehouse" | "user" | "movement" | "movementDetail" | "document" | "consecutive"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1107,6 +1151,146 @@ export namespace Prisma {
           }
         }
       }
+      Document: {
+        payload: Prisma.$DocumentPayload<ExtArgs>
+        fields: Prisma.DocumentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DocumentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DocumentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>
+          }
+          findFirst: {
+            args: Prisma.DocumentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DocumentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>
+          }
+          findMany: {
+            args: Prisma.DocumentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>[]
+          }
+          create: {
+            args: Prisma.DocumentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>
+          }
+          createMany: {
+            args: Prisma.DocumentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DocumentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>[]
+          }
+          delete: {
+            args: Prisma.DocumentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>
+          }
+          update: {
+            args: Prisma.DocumentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>
+          }
+          deleteMany: {
+            args: Prisma.DocumentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DocumentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DocumentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>
+          }
+          aggregate: {
+            args: Prisma.DocumentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDocument>
+          }
+          groupBy: {
+            args: Prisma.DocumentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DocumentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DocumentCountArgs<ExtArgs>
+            result: $Utils.Optional<DocumentCountAggregateOutputType> | number
+          }
+        }
+      }
+      Consecutive: {
+        payload: Prisma.$ConsecutivePayload<ExtArgs>
+        fields: Prisma.ConsecutiveFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ConsecutiveFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsecutivePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ConsecutiveFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsecutivePayload>
+          }
+          findFirst: {
+            args: Prisma.ConsecutiveFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsecutivePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ConsecutiveFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsecutivePayload>
+          }
+          findMany: {
+            args: Prisma.ConsecutiveFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsecutivePayload>[]
+          }
+          create: {
+            args: Prisma.ConsecutiveCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsecutivePayload>
+          }
+          createMany: {
+            args: Prisma.ConsecutiveCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ConsecutiveCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsecutivePayload>[]
+          }
+          delete: {
+            args: Prisma.ConsecutiveDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsecutivePayload>
+          }
+          update: {
+            args: Prisma.ConsecutiveUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsecutivePayload>
+          }
+          deleteMany: {
+            args: Prisma.ConsecutiveDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ConsecutiveUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ConsecutiveUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConsecutivePayload>
+          }
+          aggregate: {
+            args: Prisma.ConsecutiveAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateConsecutive>
+          }
+          groupBy: {
+            args: Prisma.ConsecutiveGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ConsecutiveGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ConsecutiveCountArgs<ExtArgs>
+            result: $Utils.Optional<ConsecutiveCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1299,11 +1483,11 @@ export namespace Prisma {
    */
 
   export type WarehouseCountOutputType = {
-    InventoryMovement: number
+    Document: number
   }
 
   export type WarehouseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    InventoryMovement?: boolean | WarehouseCountOutputTypeCountInventoryMovementArgs
+    Document?: boolean | WarehouseCountOutputTypeCountDocumentArgs
   }
 
   // Custom InputTypes
@@ -1320,8 +1504,8 @@ export namespace Prisma {
   /**
    * WarehouseCountOutputType without action
    */
-  export type WarehouseCountOutputTypeCountInventoryMovementArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MovementWhereInput
+  export type WarehouseCountOutputTypeCountDocumentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DocumentWhereInput
   }
 
 
@@ -1362,10 +1546,12 @@ export namespace Prisma {
 
   export type MovementCountOutputType = {
     MovementDetail: number
+    Consecutive: number
   }
 
   export type MovementCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     MovementDetail?: boolean | MovementCountOutputTypeCountMovementDetailArgs
+    Consecutive?: boolean | MovementCountOutputTypeCountConsecutiveArgs
   }
 
   // Custom InputTypes
@@ -1384,6 +1570,44 @@ export namespace Prisma {
    */
   export type MovementCountOutputTypeCountMovementDetailArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MovementDetailWhereInput
+  }
+
+  /**
+   * MovementCountOutputType without action
+   */
+  export type MovementCountOutputTypeCountConsecutiveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConsecutiveWhereInput
+  }
+
+
+  /**
+   * Count Type DocumentCountOutputType
+   */
+
+  export type DocumentCountOutputType = {
+    Consecutive: number
+  }
+
+  export type DocumentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Consecutive?: boolean | DocumentCountOutputTypeCountConsecutiveArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DocumentCountOutputType without action
+   */
+  export type DocumentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentCountOutputType
+     */
+    select?: DocumentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DocumentCountOutputType without action
+   */
+  export type DocumentCountOutputTypeCountConsecutiveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConsecutiveWhereInput
   }
 
 
@@ -2613,7 +2837,7 @@ export namespace Prisma {
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    InventoryMovement?: boolean | Warehouse$InventoryMovementArgs<ExtArgs>
+    Document?: boolean | Warehouse$DocumentArgs<ExtArgs>
     _count?: boolean | WarehouseCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["warehouse"]>
 
@@ -2636,7 +2860,7 @@ export namespace Prisma {
   }
 
   export type WarehouseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    InventoryMovement?: boolean | Warehouse$InventoryMovementArgs<ExtArgs>
+    Document?: boolean | Warehouse$DocumentArgs<ExtArgs>
     _count?: boolean | WarehouseCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type WarehouseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2644,7 +2868,7 @@ export namespace Prisma {
   export type $WarehousePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Warehouse"
     objects: {
-      InventoryMovement: Prisma.$MovementPayload<ExtArgs>[]
+      Document: Prisma.$DocumentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3017,7 +3241,7 @@ export namespace Prisma {
    */
   export interface Prisma__WarehouseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    InventoryMovement<T extends Warehouse$InventoryMovementArgs<ExtArgs> = {}>(args?: Subset<T, Warehouse$InventoryMovementArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovementPayload<ExtArgs>, T, "findMany"> | Null>
+    Document<T extends Warehouse$DocumentArgs<ExtArgs> = {}>(args?: Subset<T, Warehouse$DocumentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3367,23 +3591,23 @@ export namespace Prisma {
   }
 
   /**
-   * Warehouse.InventoryMovement
+   * Warehouse.Document
    */
-  export type Warehouse$InventoryMovementArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Warehouse$DocumentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Movement
+     * Select specific fields to fetch from the Document
      */
-    select?: MovementSelect<ExtArgs> | null
+    select?: DocumentSelect<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MovementInclude<ExtArgs> | null
-    where?: MovementWhereInput
-    orderBy?: MovementOrderByWithRelationInput | MovementOrderByWithRelationInput[]
-    cursor?: MovementWhereUniqueInput
+    include?: DocumentInclude<ExtArgs> | null
+    where?: DocumentWhereInput
+    orderBy?: DocumentOrderByWithRelationInput | DocumentOrderByWithRelationInput[]
+    cursor?: DocumentWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: MovementScalarFieldEnum | MovementScalarFieldEnum[]
+    distinct?: DocumentScalarFieldEnum | DocumentScalarFieldEnum[]
   }
 
   /**
@@ -4407,10 +4631,8 @@ export namespace Prisma {
 
   export type MovementMinAggregateOutputType = {
     id: string | null
-    warehouseId: string | null
     totalCost: number | null
     userId: string | null
-    type: $Enums.MovementType | null
     status: $Enums.MovementStatus | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4418,10 +4640,8 @@ export namespace Prisma {
 
   export type MovementMaxAggregateOutputType = {
     id: string | null
-    warehouseId: string | null
     totalCost: number | null
     userId: string | null
-    type: $Enums.MovementType | null
     status: $Enums.MovementStatus | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4429,10 +4649,8 @@ export namespace Prisma {
 
   export type MovementCountAggregateOutputType = {
     id: number
-    warehouseId: number
     totalCost: number
     userId: number
-    type: number
     status: number
     createdAt: number
     updatedAt: number
@@ -4450,10 +4668,8 @@ export namespace Prisma {
 
   export type MovementMinAggregateInputType = {
     id?: true
-    warehouseId?: true
     totalCost?: true
     userId?: true
-    type?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -4461,10 +4677,8 @@ export namespace Prisma {
 
   export type MovementMaxAggregateInputType = {
     id?: true
-    warehouseId?: true
     totalCost?: true
     userId?: true
-    type?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -4472,10 +4686,8 @@ export namespace Prisma {
 
   export type MovementCountAggregateInputType = {
     id?: true
-    warehouseId?: true
     totalCost?: true
     userId?: true
-    type?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -4570,10 +4782,8 @@ export namespace Prisma {
 
   export type MovementGroupByOutputType = {
     id: string
-    warehouseId: string
     totalCost: number
     userId: string
-    type: $Enums.MovementType
     status: $Enums.MovementStatus
     createdAt: Date
     updatedAt: Date
@@ -4600,67 +4810,57 @@ export namespace Prisma {
 
   export type MovementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    warehouseId?: boolean
     totalCost?: boolean
     userId?: boolean
-    type?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    warehouse?: boolean | WarehouseDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     MovementDetail?: boolean | Movement$MovementDetailArgs<ExtArgs>
+    Consecutive?: boolean | Movement$ConsecutiveArgs<ExtArgs>
     _count?: boolean | MovementCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["movement"]>
 
   export type MovementSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    warehouseId?: boolean
     totalCost?: boolean
     userId?: boolean
-    type?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    warehouse?: boolean | WarehouseDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["movement"]>
 
   export type MovementSelectScalar = {
     id?: boolean
-    warehouseId?: boolean
     totalCost?: boolean
     userId?: boolean
-    type?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
   export type MovementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    warehouse?: boolean | WarehouseDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     MovementDetail?: boolean | Movement$MovementDetailArgs<ExtArgs>
+    Consecutive?: boolean | Movement$ConsecutiveArgs<ExtArgs>
     _count?: boolean | MovementCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MovementIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    warehouse?: boolean | WarehouseDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $MovementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Movement"
     objects: {
-      warehouse: Prisma.$WarehousePayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs>
       MovementDetail: Prisma.$MovementDetailPayload<ExtArgs>[]
+      Consecutive: Prisma.$ConsecutivePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      warehouseId: string
       totalCost: number
       userId: string
-      type: $Enums.MovementType
       status: $Enums.MovementStatus
       createdAt: Date
       updatedAt: Date
@@ -5028,9 +5228,9 @@ export namespace Prisma {
    */
   export interface Prisma__MovementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    warehouse<T extends WarehouseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WarehouseDefaultArgs<ExtArgs>>): Prisma__WarehouseClient<$Result.GetResult<Prisma.$WarehousePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     MovementDetail<T extends Movement$MovementDetailArgs<ExtArgs> = {}>(args?: Subset<T, Movement$MovementDetailArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MovementDetailPayload<ExtArgs>, T, "findMany"> | Null>
+    Consecutive<T extends Movement$ConsecutiveArgs<ExtArgs> = {}>(args?: Subset<T, Movement$ConsecutiveArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConsecutivePayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5061,10 +5261,8 @@ export namespace Prisma {
    */ 
   interface MovementFieldRefs {
     readonly id: FieldRef<"Movement", 'String'>
-    readonly warehouseId: FieldRef<"Movement", 'String'>
     readonly totalCost: FieldRef<"Movement", 'Float'>
     readonly userId: FieldRef<"Movement", 'String'>
-    readonly type: FieldRef<"Movement", 'MovementType'>
     readonly status: FieldRef<"Movement", 'MovementStatus'>
     readonly createdAt: FieldRef<"Movement", 'DateTime'>
     readonly updatedAt: FieldRef<"Movement", 'DateTime'>
@@ -5403,6 +5601,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MovementDetailScalarFieldEnum | MovementDetailScalarFieldEnum[]
+  }
+
+  /**
+   * Movement.Consecutive
+   */
+  export type Movement$ConsecutiveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveInclude<ExtArgs> | null
+    where?: ConsecutiveWhereInput
+    orderBy?: ConsecutiveOrderByWithRelationInput | ConsecutiveOrderByWithRelationInput[]
+    cursor?: ConsecutiveWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ConsecutiveScalarFieldEnum | ConsecutiveScalarFieldEnum[]
   }
 
   /**
@@ -6438,6 +6656,1998 @@ export namespace Prisma {
 
 
   /**
+   * Model Document
+   */
+
+  export type AggregateDocument = {
+    _count: DocumentCountAggregateOutputType | null
+    _avg: DocumentAvgAggregateOutputType | null
+    _sum: DocumentSumAggregateOutputType | null
+    _min: DocumentMinAggregateOutputType | null
+    _max: DocumentMaxAggregateOutputType | null
+  }
+
+  export type DocumentAvgAggregateOutputType = {
+    consecutive: number | null
+  }
+
+  export type DocumentSumAggregateOutputType = {
+    consecutive: number | null
+  }
+
+  export type DocumentMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    prefix: string | null
+    consecutive: number | null
+    warehouseId: string | null
+    type: $Enums.MovementType | null
+    status: $Enums.DocumentStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DocumentMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    prefix: string | null
+    consecutive: number | null
+    warehouseId: string | null
+    type: $Enums.MovementType | null
+    status: $Enums.DocumentStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DocumentCountAggregateOutputType = {
+    id: number
+    name: number
+    prefix: number
+    consecutive: number
+    warehouseId: number
+    type: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DocumentAvgAggregateInputType = {
+    consecutive?: true
+  }
+
+  export type DocumentSumAggregateInputType = {
+    consecutive?: true
+  }
+
+  export type DocumentMinAggregateInputType = {
+    id?: true
+    name?: true
+    prefix?: true
+    consecutive?: true
+    warehouseId?: true
+    type?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DocumentMaxAggregateInputType = {
+    id?: true
+    name?: true
+    prefix?: true
+    consecutive?: true
+    warehouseId?: true
+    type?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DocumentCountAggregateInputType = {
+    id?: true
+    name?: true
+    prefix?: true
+    consecutive?: true
+    warehouseId?: true
+    type?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DocumentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Document to aggregate.
+     */
+    where?: DocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Documents to fetch.
+     */
+    orderBy?: DocumentOrderByWithRelationInput | DocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Documents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Documents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Documents
+    **/
+    _count?: true | DocumentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DocumentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DocumentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DocumentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DocumentMaxAggregateInputType
+  }
+
+  export type GetDocumentAggregateType<T extends DocumentAggregateArgs> = {
+        [P in keyof T & keyof AggregateDocument]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDocument[P]>
+      : GetScalarType<T[P], AggregateDocument[P]>
+  }
+
+
+
+
+  export type DocumentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DocumentWhereInput
+    orderBy?: DocumentOrderByWithAggregationInput | DocumentOrderByWithAggregationInput[]
+    by: DocumentScalarFieldEnum[] | DocumentScalarFieldEnum
+    having?: DocumentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DocumentCountAggregateInputType | true
+    _avg?: DocumentAvgAggregateInputType
+    _sum?: DocumentSumAggregateInputType
+    _min?: DocumentMinAggregateInputType
+    _max?: DocumentMaxAggregateInputType
+  }
+
+  export type DocumentGroupByOutputType = {
+    id: string
+    name: string
+    prefix: string
+    consecutive: number
+    warehouseId: string
+    type: $Enums.MovementType
+    status: $Enums.DocumentStatus
+    createdAt: Date
+    updatedAt: Date
+    _count: DocumentCountAggregateOutputType | null
+    _avg: DocumentAvgAggregateOutputType | null
+    _sum: DocumentSumAggregateOutputType | null
+    _min: DocumentMinAggregateOutputType | null
+    _max: DocumentMaxAggregateOutputType | null
+  }
+
+  type GetDocumentGroupByPayload<T extends DocumentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DocumentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DocumentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DocumentGroupByOutputType[P]>
+            : GetScalarType<T[P], DocumentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DocumentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    prefix?: boolean
+    consecutive?: boolean
+    warehouseId?: boolean
+    type?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    warehouse?: boolean | WarehouseDefaultArgs<ExtArgs>
+    Consecutive?: boolean | Document$ConsecutiveArgs<ExtArgs>
+    _count?: boolean | DocumentCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["document"]>
+
+  export type DocumentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    prefix?: boolean
+    consecutive?: boolean
+    warehouseId?: boolean
+    type?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    warehouse?: boolean | WarehouseDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["document"]>
+
+  export type DocumentSelectScalar = {
+    id?: boolean
+    name?: boolean
+    prefix?: boolean
+    consecutive?: boolean
+    warehouseId?: boolean
+    type?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DocumentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    warehouse?: boolean | WarehouseDefaultArgs<ExtArgs>
+    Consecutive?: boolean | Document$ConsecutiveArgs<ExtArgs>
+    _count?: boolean | DocumentCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DocumentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    warehouse?: boolean | WarehouseDefaultArgs<ExtArgs>
+  }
+
+  export type $DocumentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Document"
+    objects: {
+      warehouse: Prisma.$WarehousePayload<ExtArgs>
+      Consecutive: Prisma.$ConsecutivePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      prefix: string
+      consecutive: number
+      warehouseId: string
+      type: $Enums.MovementType
+      status: $Enums.DocumentStatus
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["document"]>
+    composites: {}
+  }
+
+  type DocumentGetPayload<S extends boolean | null | undefined | DocumentDefaultArgs> = $Result.GetResult<Prisma.$DocumentPayload, S>
+
+  type DocumentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DocumentFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: DocumentCountAggregateInputType | true
+    }
+
+  export interface DocumentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Document'], meta: { name: 'Document' } }
+    /**
+     * Find zero or one Document that matches the filter.
+     * @param {DocumentFindUniqueArgs} args - Arguments to find a Document
+     * @example
+     * // Get one Document
+     * const document = await prisma.document.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DocumentFindUniqueArgs>(args: SelectSubset<T, DocumentFindUniqueArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Document that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DocumentFindUniqueOrThrowArgs} args - Arguments to find a Document
+     * @example
+     * // Get one Document
+     * const document = await prisma.document.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DocumentFindUniqueOrThrowArgs>(args: SelectSubset<T, DocumentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Document that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentFindFirstArgs} args - Arguments to find a Document
+     * @example
+     * // Get one Document
+     * const document = await prisma.document.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DocumentFindFirstArgs>(args?: SelectSubset<T, DocumentFindFirstArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Document that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentFindFirstOrThrowArgs} args - Arguments to find a Document
+     * @example
+     * // Get one Document
+     * const document = await prisma.document.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DocumentFindFirstOrThrowArgs>(args?: SelectSubset<T, DocumentFindFirstOrThrowArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Documents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Documents
+     * const documents = await prisma.document.findMany()
+     * 
+     * // Get first 10 Documents
+     * const documents = await prisma.document.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const documentWithIdOnly = await prisma.document.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DocumentFindManyArgs>(args?: SelectSubset<T, DocumentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Document.
+     * @param {DocumentCreateArgs} args - Arguments to create a Document.
+     * @example
+     * // Create one Document
+     * const Document = await prisma.document.create({
+     *   data: {
+     *     // ... data to create a Document
+     *   }
+     * })
+     * 
+     */
+    create<T extends DocumentCreateArgs>(args: SelectSubset<T, DocumentCreateArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Documents.
+     * @param {DocumentCreateManyArgs} args - Arguments to create many Documents.
+     * @example
+     * // Create many Documents
+     * const document = await prisma.document.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DocumentCreateManyArgs>(args?: SelectSubset<T, DocumentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Documents and returns the data saved in the database.
+     * @param {DocumentCreateManyAndReturnArgs} args - Arguments to create many Documents.
+     * @example
+     * // Create many Documents
+     * const document = await prisma.document.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Documents and only return the `id`
+     * const documentWithIdOnly = await prisma.document.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DocumentCreateManyAndReturnArgs>(args?: SelectSubset<T, DocumentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Document.
+     * @param {DocumentDeleteArgs} args - Arguments to delete one Document.
+     * @example
+     * // Delete one Document
+     * const Document = await prisma.document.delete({
+     *   where: {
+     *     // ... filter to delete one Document
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DocumentDeleteArgs>(args: SelectSubset<T, DocumentDeleteArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Document.
+     * @param {DocumentUpdateArgs} args - Arguments to update one Document.
+     * @example
+     * // Update one Document
+     * const document = await prisma.document.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DocumentUpdateArgs>(args: SelectSubset<T, DocumentUpdateArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Documents.
+     * @param {DocumentDeleteManyArgs} args - Arguments to filter Documents to delete.
+     * @example
+     * // Delete a few Documents
+     * const { count } = await prisma.document.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DocumentDeleteManyArgs>(args?: SelectSubset<T, DocumentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Documents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Documents
+     * const document = await prisma.document.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DocumentUpdateManyArgs>(args: SelectSubset<T, DocumentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Document.
+     * @param {DocumentUpsertArgs} args - Arguments to update or create a Document.
+     * @example
+     * // Update or create a Document
+     * const document = await prisma.document.upsert({
+     *   create: {
+     *     // ... data to create a Document
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Document we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DocumentUpsertArgs>(args: SelectSubset<T, DocumentUpsertArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Documents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentCountArgs} args - Arguments to filter Documents to count.
+     * @example
+     * // Count the number of Documents
+     * const count = await prisma.document.count({
+     *   where: {
+     *     // ... the filter for the Documents we want to count
+     *   }
+     * })
+    **/
+    count<T extends DocumentCountArgs>(
+      args?: Subset<T, DocumentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DocumentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Document.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DocumentAggregateArgs>(args: Subset<T, DocumentAggregateArgs>): Prisma.PrismaPromise<GetDocumentAggregateType<T>>
+
+    /**
+     * Group by Document.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DocumentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DocumentGroupByArgs['orderBy'] }
+        : { orderBy?: DocumentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DocumentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDocumentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Document model
+   */
+  readonly fields: DocumentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Document.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DocumentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    warehouse<T extends WarehouseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WarehouseDefaultArgs<ExtArgs>>): Prisma__WarehouseClient<$Result.GetResult<Prisma.$WarehousePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    Consecutive<T extends Document$ConsecutiveArgs<ExtArgs> = {}>(args?: Subset<T, Document$ConsecutiveArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConsecutivePayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Document model
+   */ 
+  interface DocumentFieldRefs {
+    readonly id: FieldRef<"Document", 'String'>
+    readonly name: FieldRef<"Document", 'String'>
+    readonly prefix: FieldRef<"Document", 'String'>
+    readonly consecutive: FieldRef<"Document", 'Int'>
+    readonly warehouseId: FieldRef<"Document", 'String'>
+    readonly type: FieldRef<"Document", 'MovementType'>
+    readonly status: FieldRef<"Document", 'DocumentStatus'>
+    readonly createdAt: FieldRef<"Document", 'DateTime'>
+    readonly updatedAt: FieldRef<"Document", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Document findUnique
+   */
+  export type DocumentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which Document to fetch.
+     */
+    where: DocumentWhereUniqueInput
+  }
+
+  /**
+   * Document findUniqueOrThrow
+   */
+  export type DocumentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which Document to fetch.
+     */
+    where: DocumentWhereUniqueInput
+  }
+
+  /**
+   * Document findFirst
+   */
+  export type DocumentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which Document to fetch.
+     */
+    where?: DocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Documents to fetch.
+     */
+    orderBy?: DocumentOrderByWithRelationInput | DocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Documents.
+     */
+    cursor?: DocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Documents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Documents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Documents.
+     */
+    distinct?: DocumentScalarFieldEnum | DocumentScalarFieldEnum[]
+  }
+
+  /**
+   * Document findFirstOrThrow
+   */
+  export type DocumentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which Document to fetch.
+     */
+    where?: DocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Documents to fetch.
+     */
+    orderBy?: DocumentOrderByWithRelationInput | DocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Documents.
+     */
+    cursor?: DocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Documents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Documents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Documents.
+     */
+    distinct?: DocumentScalarFieldEnum | DocumentScalarFieldEnum[]
+  }
+
+  /**
+   * Document findMany
+   */
+  export type DocumentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which Documents to fetch.
+     */
+    where?: DocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Documents to fetch.
+     */
+    orderBy?: DocumentOrderByWithRelationInput | DocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Documents.
+     */
+    cursor?: DocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Documents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Documents.
+     */
+    skip?: number
+    distinct?: DocumentScalarFieldEnum | DocumentScalarFieldEnum[]
+  }
+
+  /**
+   * Document create
+   */
+  export type DocumentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Document.
+     */
+    data: XOR<DocumentCreateInput, DocumentUncheckedCreateInput>
+  }
+
+  /**
+   * Document createMany
+   */
+  export type DocumentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Documents.
+     */
+    data: DocumentCreateManyInput | DocumentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Document createManyAndReturn
+   */
+  export type DocumentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Documents.
+     */
+    data: DocumentCreateManyInput | DocumentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Document update
+   */
+  export type DocumentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Document.
+     */
+    data: XOR<DocumentUpdateInput, DocumentUncheckedUpdateInput>
+    /**
+     * Choose, which Document to update.
+     */
+    where: DocumentWhereUniqueInput
+  }
+
+  /**
+   * Document updateMany
+   */
+  export type DocumentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Documents.
+     */
+    data: XOR<DocumentUpdateManyMutationInput, DocumentUncheckedUpdateManyInput>
+    /**
+     * Filter which Documents to update
+     */
+    where?: DocumentWhereInput
+  }
+
+  /**
+   * Document upsert
+   */
+  export type DocumentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Document to update in case it exists.
+     */
+    where: DocumentWhereUniqueInput
+    /**
+     * In case the Document found by the `where` argument doesn't exist, create a new Document with this data.
+     */
+    create: XOR<DocumentCreateInput, DocumentUncheckedCreateInput>
+    /**
+     * In case the Document was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DocumentUpdateInput, DocumentUncheckedUpdateInput>
+  }
+
+  /**
+   * Document delete
+   */
+  export type DocumentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * Filter which Document to delete.
+     */
+    where: DocumentWhereUniqueInput
+  }
+
+  /**
+   * Document deleteMany
+   */
+  export type DocumentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Documents to delete
+     */
+    where?: DocumentWhereInput
+  }
+
+  /**
+   * Document.Consecutive
+   */
+  export type Document$ConsecutiveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveInclude<ExtArgs> | null
+    where?: ConsecutiveWhereInput
+    orderBy?: ConsecutiveOrderByWithRelationInput | ConsecutiveOrderByWithRelationInput[]
+    cursor?: ConsecutiveWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ConsecutiveScalarFieldEnum | ConsecutiveScalarFieldEnum[]
+  }
+
+  /**
+   * Document without action
+   */
+  export type DocumentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Consecutive
+   */
+
+  export type AggregateConsecutive = {
+    _count: ConsecutiveCountAggregateOutputType | null
+    _min: ConsecutiveMinAggregateOutputType | null
+    _max: ConsecutiveMaxAggregateOutputType | null
+  }
+
+  export type ConsecutiveMinAggregateOutputType = {
+    id: string | null
+    idDocument: string | null
+    documentId: string | null
+    movementId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ConsecutiveMaxAggregateOutputType = {
+    id: string | null
+    idDocument: string | null
+    documentId: string | null
+    movementId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ConsecutiveCountAggregateOutputType = {
+    id: number
+    idDocument: number
+    documentId: number
+    movementId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ConsecutiveMinAggregateInputType = {
+    id?: true
+    idDocument?: true
+    documentId?: true
+    movementId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ConsecutiveMaxAggregateInputType = {
+    id?: true
+    idDocument?: true
+    documentId?: true
+    movementId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ConsecutiveCountAggregateInputType = {
+    id?: true
+    idDocument?: true
+    documentId?: true
+    movementId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ConsecutiveAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Consecutive to aggregate.
+     */
+    where?: ConsecutiveWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Consecutives to fetch.
+     */
+    orderBy?: ConsecutiveOrderByWithRelationInput | ConsecutiveOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ConsecutiveWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Consecutives from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Consecutives.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Consecutives
+    **/
+    _count?: true | ConsecutiveCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ConsecutiveMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ConsecutiveMaxAggregateInputType
+  }
+
+  export type GetConsecutiveAggregateType<T extends ConsecutiveAggregateArgs> = {
+        [P in keyof T & keyof AggregateConsecutive]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateConsecutive[P]>
+      : GetScalarType<T[P], AggregateConsecutive[P]>
+  }
+
+
+
+
+  export type ConsecutiveGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConsecutiveWhereInput
+    orderBy?: ConsecutiveOrderByWithAggregationInput | ConsecutiveOrderByWithAggregationInput[]
+    by: ConsecutiveScalarFieldEnum[] | ConsecutiveScalarFieldEnum
+    having?: ConsecutiveScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ConsecutiveCountAggregateInputType | true
+    _min?: ConsecutiveMinAggregateInputType
+    _max?: ConsecutiveMaxAggregateInputType
+  }
+
+  export type ConsecutiveGroupByOutputType = {
+    id: string
+    idDocument: string
+    documentId: string
+    movementId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ConsecutiveCountAggregateOutputType | null
+    _min: ConsecutiveMinAggregateOutputType | null
+    _max: ConsecutiveMaxAggregateOutputType | null
+  }
+
+  type GetConsecutiveGroupByPayload<T extends ConsecutiveGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ConsecutiveGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ConsecutiveGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ConsecutiveGroupByOutputType[P]>
+            : GetScalarType<T[P], ConsecutiveGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ConsecutiveSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    idDocument?: boolean
+    documentId?: boolean
+    movementId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    document?: boolean | DocumentDefaultArgs<ExtArgs>
+    movement?: boolean | MovementDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["consecutive"]>
+
+  export type ConsecutiveSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    idDocument?: boolean
+    documentId?: boolean
+    movementId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    document?: boolean | DocumentDefaultArgs<ExtArgs>
+    movement?: boolean | MovementDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["consecutive"]>
+
+  export type ConsecutiveSelectScalar = {
+    id?: boolean
+    idDocument?: boolean
+    documentId?: boolean
+    movementId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ConsecutiveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    document?: boolean | DocumentDefaultArgs<ExtArgs>
+    movement?: boolean | MovementDefaultArgs<ExtArgs>
+  }
+  export type ConsecutiveIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    document?: boolean | DocumentDefaultArgs<ExtArgs>
+    movement?: boolean | MovementDefaultArgs<ExtArgs>
+  }
+
+  export type $ConsecutivePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Consecutive"
+    objects: {
+      document: Prisma.$DocumentPayload<ExtArgs>
+      movement: Prisma.$MovementPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      idDocument: string
+      documentId: string
+      movementId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["consecutive"]>
+    composites: {}
+  }
+
+  type ConsecutiveGetPayload<S extends boolean | null | undefined | ConsecutiveDefaultArgs> = $Result.GetResult<Prisma.$ConsecutivePayload, S>
+
+  type ConsecutiveCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ConsecutiveFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ConsecutiveCountAggregateInputType | true
+    }
+
+  export interface ConsecutiveDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Consecutive'], meta: { name: 'Consecutive' } }
+    /**
+     * Find zero or one Consecutive that matches the filter.
+     * @param {ConsecutiveFindUniqueArgs} args - Arguments to find a Consecutive
+     * @example
+     * // Get one Consecutive
+     * const consecutive = await prisma.consecutive.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ConsecutiveFindUniqueArgs>(args: SelectSubset<T, ConsecutiveFindUniqueArgs<ExtArgs>>): Prisma__ConsecutiveClient<$Result.GetResult<Prisma.$ConsecutivePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Consecutive that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ConsecutiveFindUniqueOrThrowArgs} args - Arguments to find a Consecutive
+     * @example
+     * // Get one Consecutive
+     * const consecutive = await prisma.consecutive.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ConsecutiveFindUniqueOrThrowArgs>(args: SelectSubset<T, ConsecutiveFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ConsecutiveClient<$Result.GetResult<Prisma.$ConsecutivePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Consecutive that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsecutiveFindFirstArgs} args - Arguments to find a Consecutive
+     * @example
+     * // Get one Consecutive
+     * const consecutive = await prisma.consecutive.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ConsecutiveFindFirstArgs>(args?: SelectSubset<T, ConsecutiveFindFirstArgs<ExtArgs>>): Prisma__ConsecutiveClient<$Result.GetResult<Prisma.$ConsecutivePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Consecutive that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsecutiveFindFirstOrThrowArgs} args - Arguments to find a Consecutive
+     * @example
+     * // Get one Consecutive
+     * const consecutive = await prisma.consecutive.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ConsecutiveFindFirstOrThrowArgs>(args?: SelectSubset<T, ConsecutiveFindFirstOrThrowArgs<ExtArgs>>): Prisma__ConsecutiveClient<$Result.GetResult<Prisma.$ConsecutivePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Consecutives that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsecutiveFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Consecutives
+     * const consecutives = await prisma.consecutive.findMany()
+     * 
+     * // Get first 10 Consecutives
+     * const consecutives = await prisma.consecutive.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const consecutiveWithIdOnly = await prisma.consecutive.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ConsecutiveFindManyArgs>(args?: SelectSubset<T, ConsecutiveFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConsecutivePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Consecutive.
+     * @param {ConsecutiveCreateArgs} args - Arguments to create a Consecutive.
+     * @example
+     * // Create one Consecutive
+     * const Consecutive = await prisma.consecutive.create({
+     *   data: {
+     *     // ... data to create a Consecutive
+     *   }
+     * })
+     * 
+     */
+    create<T extends ConsecutiveCreateArgs>(args: SelectSubset<T, ConsecutiveCreateArgs<ExtArgs>>): Prisma__ConsecutiveClient<$Result.GetResult<Prisma.$ConsecutivePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Consecutives.
+     * @param {ConsecutiveCreateManyArgs} args - Arguments to create many Consecutives.
+     * @example
+     * // Create many Consecutives
+     * const consecutive = await prisma.consecutive.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ConsecutiveCreateManyArgs>(args?: SelectSubset<T, ConsecutiveCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Consecutives and returns the data saved in the database.
+     * @param {ConsecutiveCreateManyAndReturnArgs} args - Arguments to create many Consecutives.
+     * @example
+     * // Create many Consecutives
+     * const consecutive = await prisma.consecutive.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Consecutives and only return the `id`
+     * const consecutiveWithIdOnly = await prisma.consecutive.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ConsecutiveCreateManyAndReturnArgs>(args?: SelectSubset<T, ConsecutiveCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConsecutivePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Consecutive.
+     * @param {ConsecutiveDeleteArgs} args - Arguments to delete one Consecutive.
+     * @example
+     * // Delete one Consecutive
+     * const Consecutive = await prisma.consecutive.delete({
+     *   where: {
+     *     // ... filter to delete one Consecutive
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ConsecutiveDeleteArgs>(args: SelectSubset<T, ConsecutiveDeleteArgs<ExtArgs>>): Prisma__ConsecutiveClient<$Result.GetResult<Prisma.$ConsecutivePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Consecutive.
+     * @param {ConsecutiveUpdateArgs} args - Arguments to update one Consecutive.
+     * @example
+     * // Update one Consecutive
+     * const consecutive = await prisma.consecutive.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ConsecutiveUpdateArgs>(args: SelectSubset<T, ConsecutiveUpdateArgs<ExtArgs>>): Prisma__ConsecutiveClient<$Result.GetResult<Prisma.$ConsecutivePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Consecutives.
+     * @param {ConsecutiveDeleteManyArgs} args - Arguments to filter Consecutives to delete.
+     * @example
+     * // Delete a few Consecutives
+     * const { count } = await prisma.consecutive.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ConsecutiveDeleteManyArgs>(args?: SelectSubset<T, ConsecutiveDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Consecutives.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsecutiveUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Consecutives
+     * const consecutive = await prisma.consecutive.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ConsecutiveUpdateManyArgs>(args: SelectSubset<T, ConsecutiveUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Consecutive.
+     * @param {ConsecutiveUpsertArgs} args - Arguments to update or create a Consecutive.
+     * @example
+     * // Update or create a Consecutive
+     * const consecutive = await prisma.consecutive.upsert({
+     *   create: {
+     *     // ... data to create a Consecutive
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Consecutive we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ConsecutiveUpsertArgs>(args: SelectSubset<T, ConsecutiveUpsertArgs<ExtArgs>>): Prisma__ConsecutiveClient<$Result.GetResult<Prisma.$ConsecutivePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Consecutives.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsecutiveCountArgs} args - Arguments to filter Consecutives to count.
+     * @example
+     * // Count the number of Consecutives
+     * const count = await prisma.consecutive.count({
+     *   where: {
+     *     // ... the filter for the Consecutives we want to count
+     *   }
+     * })
+    **/
+    count<T extends ConsecutiveCountArgs>(
+      args?: Subset<T, ConsecutiveCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ConsecutiveCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Consecutive.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsecutiveAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ConsecutiveAggregateArgs>(args: Subset<T, ConsecutiveAggregateArgs>): Prisma.PrismaPromise<GetConsecutiveAggregateType<T>>
+
+    /**
+     * Group by Consecutive.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConsecutiveGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ConsecutiveGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ConsecutiveGroupByArgs['orderBy'] }
+        : { orderBy?: ConsecutiveGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ConsecutiveGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetConsecutiveGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Consecutive model
+   */
+  readonly fields: ConsecutiveFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Consecutive.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ConsecutiveClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    document<T extends DocumentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DocumentDefaultArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    movement<T extends MovementDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MovementDefaultArgs<ExtArgs>>): Prisma__MovementClient<$Result.GetResult<Prisma.$MovementPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Consecutive model
+   */ 
+  interface ConsecutiveFieldRefs {
+    readonly id: FieldRef<"Consecutive", 'String'>
+    readonly idDocument: FieldRef<"Consecutive", 'String'>
+    readonly documentId: FieldRef<"Consecutive", 'String'>
+    readonly movementId: FieldRef<"Consecutive", 'String'>
+    readonly createdAt: FieldRef<"Consecutive", 'DateTime'>
+    readonly updatedAt: FieldRef<"Consecutive", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Consecutive findUnique
+   */
+  export type ConsecutiveFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveInclude<ExtArgs> | null
+    /**
+     * Filter, which Consecutive to fetch.
+     */
+    where: ConsecutiveWhereUniqueInput
+  }
+
+  /**
+   * Consecutive findUniqueOrThrow
+   */
+  export type ConsecutiveFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveInclude<ExtArgs> | null
+    /**
+     * Filter, which Consecutive to fetch.
+     */
+    where: ConsecutiveWhereUniqueInput
+  }
+
+  /**
+   * Consecutive findFirst
+   */
+  export type ConsecutiveFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveInclude<ExtArgs> | null
+    /**
+     * Filter, which Consecutive to fetch.
+     */
+    where?: ConsecutiveWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Consecutives to fetch.
+     */
+    orderBy?: ConsecutiveOrderByWithRelationInput | ConsecutiveOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Consecutives.
+     */
+    cursor?: ConsecutiveWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Consecutives from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Consecutives.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Consecutives.
+     */
+    distinct?: ConsecutiveScalarFieldEnum | ConsecutiveScalarFieldEnum[]
+  }
+
+  /**
+   * Consecutive findFirstOrThrow
+   */
+  export type ConsecutiveFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveInclude<ExtArgs> | null
+    /**
+     * Filter, which Consecutive to fetch.
+     */
+    where?: ConsecutiveWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Consecutives to fetch.
+     */
+    orderBy?: ConsecutiveOrderByWithRelationInput | ConsecutiveOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Consecutives.
+     */
+    cursor?: ConsecutiveWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Consecutives from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Consecutives.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Consecutives.
+     */
+    distinct?: ConsecutiveScalarFieldEnum | ConsecutiveScalarFieldEnum[]
+  }
+
+  /**
+   * Consecutive findMany
+   */
+  export type ConsecutiveFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveInclude<ExtArgs> | null
+    /**
+     * Filter, which Consecutives to fetch.
+     */
+    where?: ConsecutiveWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Consecutives to fetch.
+     */
+    orderBy?: ConsecutiveOrderByWithRelationInput | ConsecutiveOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Consecutives.
+     */
+    cursor?: ConsecutiveWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Consecutives from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Consecutives.
+     */
+    skip?: number
+    distinct?: ConsecutiveScalarFieldEnum | ConsecutiveScalarFieldEnum[]
+  }
+
+  /**
+   * Consecutive create
+   */
+  export type ConsecutiveCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Consecutive.
+     */
+    data: XOR<ConsecutiveCreateInput, ConsecutiveUncheckedCreateInput>
+  }
+
+  /**
+   * Consecutive createMany
+   */
+  export type ConsecutiveCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Consecutives.
+     */
+    data: ConsecutiveCreateManyInput | ConsecutiveCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Consecutive createManyAndReturn
+   */
+  export type ConsecutiveCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Consecutives.
+     */
+    data: ConsecutiveCreateManyInput | ConsecutiveCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Consecutive update
+   */
+  export type ConsecutiveUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Consecutive.
+     */
+    data: XOR<ConsecutiveUpdateInput, ConsecutiveUncheckedUpdateInput>
+    /**
+     * Choose, which Consecutive to update.
+     */
+    where: ConsecutiveWhereUniqueInput
+  }
+
+  /**
+   * Consecutive updateMany
+   */
+  export type ConsecutiveUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Consecutives.
+     */
+    data: XOR<ConsecutiveUpdateManyMutationInput, ConsecutiveUncheckedUpdateManyInput>
+    /**
+     * Filter which Consecutives to update
+     */
+    where?: ConsecutiveWhereInput
+  }
+
+  /**
+   * Consecutive upsert
+   */
+  export type ConsecutiveUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Consecutive to update in case it exists.
+     */
+    where: ConsecutiveWhereUniqueInput
+    /**
+     * In case the Consecutive found by the `where` argument doesn't exist, create a new Consecutive with this data.
+     */
+    create: XOR<ConsecutiveCreateInput, ConsecutiveUncheckedCreateInput>
+    /**
+     * In case the Consecutive was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ConsecutiveUpdateInput, ConsecutiveUncheckedUpdateInput>
+  }
+
+  /**
+   * Consecutive delete
+   */
+  export type ConsecutiveDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveInclude<ExtArgs> | null
+    /**
+     * Filter which Consecutive to delete.
+     */
+    where: ConsecutiveWhereUniqueInput
+  }
+
+  /**
+   * Consecutive deleteMany
+   */
+  export type ConsecutiveDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Consecutives to delete
+     */
+    where?: ConsecutiveWhereInput
+  }
+
+  /**
+   * Consecutive without action
+   */
+  export type ConsecutiveDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Consecutive
+     */
+    select?: ConsecutiveSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConsecutiveInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -6495,10 +8705,8 @@ export namespace Prisma {
 
   export const MovementScalarFieldEnum: {
     id: 'id',
-    warehouseId: 'warehouseId',
     totalCost: 'totalCost',
     userId: 'userId',
-    type: 'type',
     status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -6519,6 +8727,33 @@ export namespace Prisma {
   };
 
   export type MovementDetailScalarFieldEnum = (typeof MovementDetailScalarFieldEnum)[keyof typeof MovementDetailScalarFieldEnum]
+
+
+  export const DocumentScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    prefix: 'prefix',
+    consecutive: 'consecutive',
+    warehouseId: 'warehouseId',
+    type: 'type',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
+
+
+  export const ConsecutiveScalarFieldEnum: {
+    id: 'id',
+    idDocument: 'idDocument',
+    documentId: 'documentId',
+    movementId: 'movementId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ConsecutiveScalarFieldEnum = (typeof ConsecutiveScalarFieldEnum)[keyof typeof ConsecutiveScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -6663,6 +8898,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'MovementStatus'
+   */
+  export type EnumMovementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MovementStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'MovementStatus[]'
+   */
+  export type ListEnumMovementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MovementStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'MovementType'
    */
   export type EnumMovementTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MovementType'>
@@ -6677,16 +8926,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'MovementStatus'
+   * Reference to a field of type 'DocumentStatus'
    */
-  export type EnumMovementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MovementStatus'>
+  export type EnumDocumentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DocumentStatus'>
     
 
 
   /**
-   * Reference to a field of type 'MovementStatus[]'
+   * Reference to a field of type 'DocumentStatus[]'
    */
-  export type ListEnumMovementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MovementStatus[]'>
+  export type ListEnumDocumentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DocumentStatus[]'>
     
   /**
    * Deep Input Types
@@ -6785,7 +9034,7 @@ export namespace Prisma {
     status?: EnumWarehouseStatusFilter<"Warehouse"> | $Enums.WarehouseStatus
     createdAt?: DateTimeFilter<"Warehouse"> | Date | string
     updatedAt?: DateTimeFilter<"Warehouse"> | Date | string
-    InventoryMovement?: MovementListRelationFilter
+    Document?: DocumentListRelationFilter
   }
 
   export type WarehouseOrderByWithRelationInput = {
@@ -6795,7 +9044,7 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    InventoryMovement?: MovementOrderByRelationAggregateInput
+    Document?: DocumentOrderByRelationAggregateInput
   }
 
   export type WarehouseWhereUniqueInput = Prisma.AtLeast<{
@@ -6808,7 +9057,7 @@ export namespace Prisma {
     status?: EnumWarehouseStatusFilter<"Warehouse"> | $Enums.WarehouseStatus
     createdAt?: DateTimeFilter<"Warehouse"> | Date | string
     updatedAt?: DateTimeFilter<"Warehouse"> | Date | string
-    InventoryMovement?: MovementListRelationFilter
+    Document?: DocumentListRelationFilter
   }, "id">
 
   export type WarehouseOrderByWithAggregationInput = {
@@ -6910,30 +9159,26 @@ export namespace Prisma {
     OR?: MovementWhereInput[]
     NOT?: MovementWhereInput | MovementWhereInput[]
     id?: StringFilter<"Movement"> | string
-    warehouseId?: StringFilter<"Movement"> | string
     totalCost?: FloatFilter<"Movement"> | number
     userId?: StringFilter<"Movement"> | string
-    type?: EnumMovementTypeFilter<"Movement"> | $Enums.MovementType
     status?: EnumMovementStatusFilter<"Movement"> | $Enums.MovementStatus
     createdAt?: DateTimeFilter<"Movement"> | Date | string
     updatedAt?: DateTimeFilter<"Movement"> | Date | string
-    warehouse?: XOR<WarehouseRelationFilter, WarehouseWhereInput>
     user?: XOR<UserRelationFilter, UserWhereInput>
     MovementDetail?: MovementDetailListRelationFilter
+    Consecutive?: ConsecutiveListRelationFilter
   }
 
   export type MovementOrderByWithRelationInput = {
     id?: SortOrder
-    warehouseId?: SortOrder
     totalCost?: SortOrder
     userId?: SortOrder
-    type?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    warehouse?: WarehouseOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
     MovementDetail?: MovementDetailOrderByRelationAggregateInput
+    Consecutive?: ConsecutiveOrderByRelationAggregateInput
   }
 
   export type MovementWhereUniqueInput = Prisma.AtLeast<{
@@ -6941,24 +9186,20 @@ export namespace Prisma {
     AND?: MovementWhereInput | MovementWhereInput[]
     OR?: MovementWhereInput[]
     NOT?: MovementWhereInput | MovementWhereInput[]
-    warehouseId?: StringFilter<"Movement"> | string
     totalCost?: FloatFilter<"Movement"> | number
     userId?: StringFilter<"Movement"> | string
-    type?: EnumMovementTypeFilter<"Movement"> | $Enums.MovementType
     status?: EnumMovementStatusFilter<"Movement"> | $Enums.MovementStatus
     createdAt?: DateTimeFilter<"Movement"> | Date | string
     updatedAt?: DateTimeFilter<"Movement"> | Date | string
-    warehouse?: XOR<WarehouseRelationFilter, WarehouseWhereInput>
     user?: XOR<UserRelationFilter, UserWhereInput>
     MovementDetail?: MovementDetailListRelationFilter
+    Consecutive?: ConsecutiveListRelationFilter
   }, "id">
 
   export type MovementOrderByWithAggregationInput = {
     id?: SortOrder
-    warehouseId?: SortOrder
     totalCost?: SortOrder
     userId?: SortOrder
-    type?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -6974,10 +9215,8 @@ export namespace Prisma {
     OR?: MovementScalarWhereWithAggregatesInput[]
     NOT?: MovementScalarWhereWithAggregatesInput | MovementScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Movement"> | string
-    warehouseId?: StringWithAggregatesFilter<"Movement"> | string
     totalCost?: FloatWithAggregatesFilter<"Movement"> | number
     userId?: StringWithAggregatesFilter<"Movement"> | string
-    type?: EnumMovementTypeWithAggregatesFilter<"Movement"> | $Enums.MovementType
     status?: EnumMovementStatusWithAggregatesFilter<"Movement"> | $Enums.MovementStatus
     createdAt?: DateTimeWithAggregatesFilter<"Movement"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Movement"> | Date | string
@@ -7056,6 +9295,149 @@ export namespace Prisma {
     price?: FloatWithAggregatesFilter<"MovementDetail"> | number
     createdAt?: DateTimeWithAggregatesFilter<"MovementDetail"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MovementDetail"> | Date | string
+  }
+
+  export type DocumentWhereInput = {
+    AND?: DocumentWhereInput | DocumentWhereInput[]
+    OR?: DocumentWhereInput[]
+    NOT?: DocumentWhereInput | DocumentWhereInput[]
+    id?: StringFilter<"Document"> | string
+    name?: StringFilter<"Document"> | string
+    prefix?: StringFilter<"Document"> | string
+    consecutive?: IntFilter<"Document"> | number
+    warehouseId?: StringFilter<"Document"> | string
+    type?: EnumMovementTypeFilter<"Document"> | $Enums.MovementType
+    status?: EnumDocumentStatusFilter<"Document"> | $Enums.DocumentStatus
+    createdAt?: DateTimeFilter<"Document"> | Date | string
+    updatedAt?: DateTimeFilter<"Document"> | Date | string
+    warehouse?: XOR<WarehouseRelationFilter, WarehouseWhereInput>
+    Consecutive?: ConsecutiveListRelationFilter
+  }
+
+  export type DocumentOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    prefix?: SortOrder
+    consecutive?: SortOrder
+    warehouseId?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    warehouse?: WarehouseOrderByWithRelationInput
+    Consecutive?: ConsecutiveOrderByRelationAggregateInput
+  }
+
+  export type DocumentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DocumentWhereInput | DocumentWhereInput[]
+    OR?: DocumentWhereInput[]
+    NOT?: DocumentWhereInput | DocumentWhereInput[]
+    name?: StringFilter<"Document"> | string
+    prefix?: StringFilter<"Document"> | string
+    consecutive?: IntFilter<"Document"> | number
+    warehouseId?: StringFilter<"Document"> | string
+    type?: EnumMovementTypeFilter<"Document"> | $Enums.MovementType
+    status?: EnumDocumentStatusFilter<"Document"> | $Enums.DocumentStatus
+    createdAt?: DateTimeFilter<"Document"> | Date | string
+    updatedAt?: DateTimeFilter<"Document"> | Date | string
+    warehouse?: XOR<WarehouseRelationFilter, WarehouseWhereInput>
+    Consecutive?: ConsecutiveListRelationFilter
+  }, "id">
+
+  export type DocumentOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    prefix?: SortOrder
+    consecutive?: SortOrder
+    warehouseId?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DocumentCountOrderByAggregateInput
+    _avg?: DocumentAvgOrderByAggregateInput
+    _max?: DocumentMaxOrderByAggregateInput
+    _min?: DocumentMinOrderByAggregateInput
+    _sum?: DocumentSumOrderByAggregateInput
+  }
+
+  export type DocumentScalarWhereWithAggregatesInput = {
+    AND?: DocumentScalarWhereWithAggregatesInput | DocumentScalarWhereWithAggregatesInput[]
+    OR?: DocumentScalarWhereWithAggregatesInput[]
+    NOT?: DocumentScalarWhereWithAggregatesInput | DocumentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Document"> | string
+    name?: StringWithAggregatesFilter<"Document"> | string
+    prefix?: StringWithAggregatesFilter<"Document"> | string
+    consecutive?: IntWithAggregatesFilter<"Document"> | number
+    warehouseId?: StringWithAggregatesFilter<"Document"> | string
+    type?: EnumMovementTypeWithAggregatesFilter<"Document"> | $Enums.MovementType
+    status?: EnumDocumentStatusWithAggregatesFilter<"Document"> | $Enums.DocumentStatus
+    createdAt?: DateTimeWithAggregatesFilter<"Document"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Document"> | Date | string
+  }
+
+  export type ConsecutiveWhereInput = {
+    AND?: ConsecutiveWhereInput | ConsecutiveWhereInput[]
+    OR?: ConsecutiveWhereInput[]
+    NOT?: ConsecutiveWhereInput | ConsecutiveWhereInput[]
+    id?: StringFilter<"Consecutive"> | string
+    idDocument?: StringFilter<"Consecutive"> | string
+    documentId?: StringFilter<"Consecutive"> | string
+    movementId?: StringFilter<"Consecutive"> | string
+    createdAt?: DateTimeFilter<"Consecutive"> | Date | string
+    updatedAt?: DateTimeFilter<"Consecutive"> | Date | string
+    document?: XOR<DocumentRelationFilter, DocumentWhereInput>
+    movement?: XOR<MovementRelationFilter, MovementWhereInput>
+  }
+
+  export type ConsecutiveOrderByWithRelationInput = {
+    id?: SortOrder
+    idDocument?: SortOrder
+    documentId?: SortOrder
+    movementId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    document?: DocumentOrderByWithRelationInput
+    movement?: MovementOrderByWithRelationInput
+  }
+
+  export type ConsecutiveWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    idDocument?: string
+    AND?: ConsecutiveWhereInput | ConsecutiveWhereInput[]
+    OR?: ConsecutiveWhereInput[]
+    NOT?: ConsecutiveWhereInput | ConsecutiveWhereInput[]
+    documentId?: StringFilter<"Consecutive"> | string
+    movementId?: StringFilter<"Consecutive"> | string
+    createdAt?: DateTimeFilter<"Consecutive"> | Date | string
+    updatedAt?: DateTimeFilter<"Consecutive"> | Date | string
+    document?: XOR<DocumentRelationFilter, DocumentWhereInput>
+    movement?: XOR<MovementRelationFilter, MovementWhereInput>
+  }, "id" | "idDocument">
+
+  export type ConsecutiveOrderByWithAggregationInput = {
+    id?: SortOrder
+    idDocument?: SortOrder
+    documentId?: SortOrder
+    movementId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ConsecutiveCountOrderByAggregateInput
+    _max?: ConsecutiveMaxOrderByAggregateInput
+    _min?: ConsecutiveMinOrderByAggregateInput
+  }
+
+  export type ConsecutiveScalarWhereWithAggregatesInput = {
+    AND?: ConsecutiveScalarWhereWithAggregatesInput | ConsecutiveScalarWhereWithAggregatesInput[]
+    OR?: ConsecutiveScalarWhereWithAggregatesInput[]
+    NOT?: ConsecutiveScalarWhereWithAggregatesInput | ConsecutiveScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Consecutive"> | string
+    idDocument?: StringWithAggregatesFilter<"Consecutive"> | string
+    documentId?: StringWithAggregatesFilter<"Consecutive"> | string
+    movementId?: StringWithAggregatesFilter<"Consecutive"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Consecutive"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Consecutive"> | Date | string
   }
 
   export type ProductCreateInput = {
@@ -7160,7 +9542,7 @@ export namespace Prisma {
     status?: $Enums.WarehouseStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    InventoryMovement?: MovementCreateNestedManyWithoutWarehouseInput
+    Document?: DocumentCreateNestedManyWithoutWarehouseInput
   }
 
   export type WarehouseUncheckedCreateInput = {
@@ -7170,7 +9552,7 @@ export namespace Prisma {
     status?: $Enums.WarehouseStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    InventoryMovement?: MovementUncheckedCreateNestedManyWithoutWarehouseInput
+    Document?: DocumentUncheckedCreateNestedManyWithoutWarehouseInput
   }
 
   export type WarehouseUpdateInput = {
@@ -7180,7 +9562,7 @@ export namespace Prisma {
     status?: EnumWarehouseStatusFieldUpdateOperationsInput | $Enums.WarehouseStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    InventoryMovement?: MovementUpdateManyWithoutWarehouseNestedInput
+    Document?: DocumentUpdateManyWithoutWarehouseNestedInput
   }
 
   export type WarehouseUncheckedUpdateInput = {
@@ -7190,7 +9572,7 @@ export namespace Prisma {
     status?: EnumWarehouseStatusFieldUpdateOperationsInput | $Enums.WarehouseStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    InventoryMovement?: MovementUncheckedUpdateManyWithoutWarehouseNestedInput
+    Document?: DocumentUncheckedUpdateManyWithoutWarehouseNestedInput
   }
 
   export type WarehouseCreateManyInput = {
@@ -7304,57 +9686,51 @@ export namespace Prisma {
   export type MovementCreateInput = {
     id?: string
     totalCost: number
-    type: $Enums.MovementType
     status: $Enums.MovementStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    warehouse: WarehouseCreateNestedOneWithoutInventoryMovementInput
     user: UserCreateNestedOneWithoutMovementInput
     MovementDetail?: MovementDetailCreateNestedManyWithoutMovementInput
+    Consecutive?: ConsecutiveCreateNestedManyWithoutMovementInput
   }
 
   export type MovementUncheckedCreateInput = {
     id?: string
-    warehouseId: string
     totalCost: number
     userId: string
-    type: $Enums.MovementType
     status: $Enums.MovementStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     MovementDetail?: MovementDetailUncheckedCreateNestedManyWithoutMovementInput
+    Consecutive?: ConsecutiveUncheckedCreateNestedManyWithoutMovementInput
   }
 
   export type MovementUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     totalCost?: FloatFieldUpdateOperationsInput | number
-    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
     status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    warehouse?: WarehouseUpdateOneRequiredWithoutInventoryMovementNestedInput
     user?: UserUpdateOneRequiredWithoutMovementNestedInput
     MovementDetail?: MovementDetailUpdateManyWithoutMovementNestedInput
+    Consecutive?: ConsecutiveUpdateManyWithoutMovementNestedInput
   }
 
   export type MovementUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    warehouseId?: StringFieldUpdateOperationsInput | string
     totalCost?: FloatFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
-    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
     status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     MovementDetail?: MovementDetailUncheckedUpdateManyWithoutMovementNestedInput
+    Consecutive?: ConsecutiveUncheckedUpdateManyWithoutMovementNestedInput
   }
 
   export type MovementCreateManyInput = {
     id?: string
-    warehouseId: string
     totalCost: number
     userId: string
-    type: $Enums.MovementType
     status: $Enums.MovementStatus
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7363,7 +9739,6 @@ export namespace Prisma {
   export type MovementUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     totalCost?: FloatFieldUpdateOperationsInput | number
-    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
     status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7371,10 +9746,8 @@ export namespace Prisma {
 
   export type MovementUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    warehouseId?: StringFieldUpdateOperationsInput | string
     totalCost?: FloatFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
-    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
     status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7451,6 +9824,154 @@ export namespace Prisma {
     quantity?: IntFieldUpdateOperationsInput | number
     cost?: FloatFieldUpdateOperationsInput | number
     price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DocumentCreateInput = {
+    id?: string
+    name: string
+    prefix: string
+    consecutive: number
+    type: $Enums.MovementType
+    status?: $Enums.DocumentStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    warehouse: WarehouseCreateNestedOneWithoutDocumentInput
+    Consecutive?: ConsecutiveCreateNestedManyWithoutDocumentInput
+  }
+
+  export type DocumentUncheckedCreateInput = {
+    id?: string
+    name: string
+    prefix: string
+    consecutive: number
+    warehouseId: string
+    type: $Enums.MovementType
+    status?: $Enums.DocumentStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Consecutive?: ConsecutiveUncheckedCreateNestedManyWithoutDocumentInput
+  }
+
+  export type DocumentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    prefix?: StringFieldUpdateOperationsInput | string
+    consecutive?: IntFieldUpdateOperationsInput | number
+    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
+    status?: EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    warehouse?: WarehouseUpdateOneRequiredWithoutDocumentNestedInput
+    Consecutive?: ConsecutiveUpdateManyWithoutDocumentNestedInput
+  }
+
+  export type DocumentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    prefix?: StringFieldUpdateOperationsInput | string
+    consecutive?: IntFieldUpdateOperationsInput | number
+    warehouseId?: StringFieldUpdateOperationsInput | string
+    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
+    status?: EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Consecutive?: ConsecutiveUncheckedUpdateManyWithoutDocumentNestedInput
+  }
+
+  export type DocumentCreateManyInput = {
+    id?: string
+    name: string
+    prefix: string
+    consecutive: number
+    warehouseId: string
+    type: $Enums.MovementType
+    status?: $Enums.DocumentStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DocumentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    prefix?: StringFieldUpdateOperationsInput | string
+    consecutive?: IntFieldUpdateOperationsInput | number
+    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
+    status?: EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DocumentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    prefix?: StringFieldUpdateOperationsInput | string
+    consecutive?: IntFieldUpdateOperationsInput | number
+    warehouseId?: StringFieldUpdateOperationsInput | string
+    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
+    status?: EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsecutiveCreateInput = {
+    id?: string
+    idDocument: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    document: DocumentCreateNestedOneWithoutConsecutiveInput
+    movement: MovementCreateNestedOneWithoutConsecutiveInput
+  }
+
+  export type ConsecutiveUncheckedCreateInput = {
+    id?: string
+    idDocument: string
+    documentId: string
+    movementId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConsecutiveUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    idDocument?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    document?: DocumentUpdateOneRequiredWithoutConsecutiveNestedInput
+    movement?: MovementUpdateOneRequiredWithoutConsecutiveNestedInput
+  }
+
+  export type ConsecutiveUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    idDocument?: StringFieldUpdateOperationsInput | string
+    documentId?: StringFieldUpdateOperationsInput | string
+    movementId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsecutiveCreateManyInput = {
+    id?: string
+    idDocument: string
+    documentId: string
+    movementId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConsecutiveUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    idDocument?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsecutiveUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    idDocument?: StringFieldUpdateOperationsInput | string
+    documentId?: StringFieldUpdateOperationsInput | string
+    movementId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7690,13 +10211,13 @@ export namespace Prisma {
     not?: NestedEnumWarehouseStatusFilter<$PrismaModel> | $Enums.WarehouseStatus
   }
 
-  export type MovementListRelationFilter = {
-    every?: MovementWhereInput
-    some?: MovementWhereInput
-    none?: MovementWhereInput
+  export type DocumentListRelationFilter = {
+    every?: DocumentWhereInput
+    some?: DocumentWhereInput
+    none?: DocumentWhereInput
   }
 
-  export type MovementOrderByRelationAggregateInput = {
+  export type DocumentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -7749,6 +10270,16 @@ export namespace Prisma {
     in?: $Enums.UserStatus[] | ListEnumUserStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.UserStatus[] | ListEnumUserStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumUserStatusFilter<$PrismaModel> | $Enums.UserStatus
+  }
+
+  export type MovementListRelationFilter = {
+    every?: MovementWhereInput
+    some?: MovementWhereInput
+    none?: MovementWhereInput
+  }
+
+  export type MovementOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -7804,13 +10335,6 @@ export namespace Prisma {
     _max?: NestedEnumUserStatusFilter<$PrismaModel>
   }
 
-  export type EnumMovementTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.MovementType | EnumMovementTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.MovementType[] | ListEnumMovementTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MovementType[] | ListEnumMovementTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumMovementTypeFilter<$PrismaModel> | $Enums.MovementType
-  }
-
   export type EnumMovementStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.MovementStatus | EnumMovementStatusFieldRefInput<$PrismaModel>
     in?: $Enums.MovementStatus[] | ListEnumMovementStatusFieldRefInput<$PrismaModel>
@@ -7818,22 +10342,25 @@ export namespace Prisma {
     not?: NestedEnumMovementStatusFilter<$PrismaModel> | $Enums.MovementStatus
   }
 
-  export type WarehouseRelationFilter = {
-    is?: WarehouseWhereInput
-    isNot?: WarehouseWhereInput
-  }
-
   export type UserRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
   }
 
+  export type ConsecutiveListRelationFilter = {
+    every?: ConsecutiveWhereInput
+    some?: ConsecutiveWhereInput
+    none?: ConsecutiveWhereInput
+  }
+
+  export type ConsecutiveOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type MovementCountOrderByAggregateInput = {
     id?: SortOrder
-    warehouseId?: SortOrder
     totalCost?: SortOrder
     userId?: SortOrder
-    type?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7845,10 +10372,8 @@ export namespace Prisma {
 
   export type MovementMaxOrderByAggregateInput = {
     id?: SortOrder
-    warehouseId?: SortOrder
     totalCost?: SortOrder
     userId?: SortOrder
-    type?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7856,10 +10381,8 @@ export namespace Prisma {
 
   export type MovementMinOrderByAggregateInput = {
     id?: SortOrder
-    warehouseId?: SortOrder
     totalCost?: SortOrder
     userId?: SortOrder
-    type?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7867,16 +10390,6 @@ export namespace Prisma {
 
   export type MovementSumOrderByAggregateInput = {
     totalCost?: SortOrder
-  }
-
-  export type EnumMovementTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.MovementType | EnumMovementTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.MovementType[] | ListEnumMovementTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MovementType[] | ListEnumMovementTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumMovementTypeWithAggregatesFilter<$PrismaModel> | $Enums.MovementType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumMovementTypeFilter<$PrismaModel>
-    _max?: NestedEnumMovementTypeFilter<$PrismaModel>
   }
 
   export type EnumMovementStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -7942,6 +10455,121 @@ export namespace Prisma {
     quantity?: SortOrder
     cost?: SortOrder
     price?: SortOrder
+  }
+
+  export type EnumMovementTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MovementType | EnumMovementTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MovementType[] | ListEnumMovementTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MovementType[] | ListEnumMovementTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMovementTypeFilter<$PrismaModel> | $Enums.MovementType
+  }
+
+  export type EnumDocumentStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.DocumentStatus | EnumDocumentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DocumentStatus[] | ListEnumDocumentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DocumentStatus[] | ListEnumDocumentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDocumentStatusFilter<$PrismaModel> | $Enums.DocumentStatus
+  }
+
+  export type WarehouseRelationFilter = {
+    is?: WarehouseWhereInput
+    isNot?: WarehouseWhereInput
+  }
+
+  export type DocumentCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    prefix?: SortOrder
+    consecutive?: SortOrder
+    warehouseId?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DocumentAvgOrderByAggregateInput = {
+    consecutive?: SortOrder
+  }
+
+  export type DocumentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    prefix?: SortOrder
+    consecutive?: SortOrder
+    warehouseId?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DocumentMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    prefix?: SortOrder
+    consecutive?: SortOrder
+    warehouseId?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DocumentSumOrderByAggregateInput = {
+    consecutive?: SortOrder
+  }
+
+  export type EnumMovementTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MovementType | EnumMovementTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MovementType[] | ListEnumMovementTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MovementType[] | ListEnumMovementTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMovementTypeWithAggregatesFilter<$PrismaModel> | $Enums.MovementType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMovementTypeFilter<$PrismaModel>
+    _max?: NestedEnumMovementTypeFilter<$PrismaModel>
+  }
+
+  export type EnumDocumentStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DocumentStatus | EnumDocumentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DocumentStatus[] | ListEnumDocumentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DocumentStatus[] | ListEnumDocumentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDocumentStatusWithAggregatesFilter<$PrismaModel> | $Enums.DocumentStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDocumentStatusFilter<$PrismaModel>
+    _max?: NestedEnumDocumentStatusFilter<$PrismaModel>
+  }
+
+  export type DocumentRelationFilter = {
+    is?: DocumentWhereInput
+    isNot?: DocumentWhereInput
+  }
+
+  export type ConsecutiveCountOrderByAggregateInput = {
+    id?: SortOrder
+    idDocument?: SortOrder
+    documentId?: SortOrder
+    movementId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ConsecutiveMaxOrderByAggregateInput = {
+    id?: SortOrder
+    idDocument?: SortOrder
+    documentId?: SortOrder
+    movementId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ConsecutiveMinOrderByAggregateInput = {
+    id?: SortOrder
+    idDocument?: SortOrder
+    documentId?: SortOrder
+    movementId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type MovementDetailCreateNestedManyWithoutProductInput = {
@@ -8018,50 +10646,50 @@ export namespace Prisma {
     deleteMany?: MovementDetailScalarWhereInput | MovementDetailScalarWhereInput[]
   }
 
-  export type MovementCreateNestedManyWithoutWarehouseInput = {
-    create?: XOR<MovementCreateWithoutWarehouseInput, MovementUncheckedCreateWithoutWarehouseInput> | MovementCreateWithoutWarehouseInput[] | MovementUncheckedCreateWithoutWarehouseInput[]
-    connectOrCreate?: MovementCreateOrConnectWithoutWarehouseInput | MovementCreateOrConnectWithoutWarehouseInput[]
-    createMany?: MovementCreateManyWarehouseInputEnvelope
-    connect?: MovementWhereUniqueInput | MovementWhereUniqueInput[]
+  export type DocumentCreateNestedManyWithoutWarehouseInput = {
+    create?: XOR<DocumentCreateWithoutWarehouseInput, DocumentUncheckedCreateWithoutWarehouseInput> | DocumentCreateWithoutWarehouseInput[] | DocumentUncheckedCreateWithoutWarehouseInput[]
+    connectOrCreate?: DocumentCreateOrConnectWithoutWarehouseInput | DocumentCreateOrConnectWithoutWarehouseInput[]
+    createMany?: DocumentCreateManyWarehouseInputEnvelope
+    connect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
   }
 
-  export type MovementUncheckedCreateNestedManyWithoutWarehouseInput = {
-    create?: XOR<MovementCreateWithoutWarehouseInput, MovementUncheckedCreateWithoutWarehouseInput> | MovementCreateWithoutWarehouseInput[] | MovementUncheckedCreateWithoutWarehouseInput[]
-    connectOrCreate?: MovementCreateOrConnectWithoutWarehouseInput | MovementCreateOrConnectWithoutWarehouseInput[]
-    createMany?: MovementCreateManyWarehouseInputEnvelope
-    connect?: MovementWhereUniqueInput | MovementWhereUniqueInput[]
+  export type DocumentUncheckedCreateNestedManyWithoutWarehouseInput = {
+    create?: XOR<DocumentCreateWithoutWarehouseInput, DocumentUncheckedCreateWithoutWarehouseInput> | DocumentCreateWithoutWarehouseInput[] | DocumentUncheckedCreateWithoutWarehouseInput[]
+    connectOrCreate?: DocumentCreateOrConnectWithoutWarehouseInput | DocumentCreateOrConnectWithoutWarehouseInput[]
+    createMany?: DocumentCreateManyWarehouseInputEnvelope
+    connect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
   }
 
   export type EnumWarehouseStatusFieldUpdateOperationsInput = {
     set?: $Enums.WarehouseStatus
   }
 
-  export type MovementUpdateManyWithoutWarehouseNestedInput = {
-    create?: XOR<MovementCreateWithoutWarehouseInput, MovementUncheckedCreateWithoutWarehouseInput> | MovementCreateWithoutWarehouseInput[] | MovementUncheckedCreateWithoutWarehouseInput[]
-    connectOrCreate?: MovementCreateOrConnectWithoutWarehouseInput | MovementCreateOrConnectWithoutWarehouseInput[]
-    upsert?: MovementUpsertWithWhereUniqueWithoutWarehouseInput | MovementUpsertWithWhereUniqueWithoutWarehouseInput[]
-    createMany?: MovementCreateManyWarehouseInputEnvelope
-    set?: MovementWhereUniqueInput | MovementWhereUniqueInput[]
-    disconnect?: MovementWhereUniqueInput | MovementWhereUniqueInput[]
-    delete?: MovementWhereUniqueInput | MovementWhereUniqueInput[]
-    connect?: MovementWhereUniqueInput | MovementWhereUniqueInput[]
-    update?: MovementUpdateWithWhereUniqueWithoutWarehouseInput | MovementUpdateWithWhereUniqueWithoutWarehouseInput[]
-    updateMany?: MovementUpdateManyWithWhereWithoutWarehouseInput | MovementUpdateManyWithWhereWithoutWarehouseInput[]
-    deleteMany?: MovementScalarWhereInput | MovementScalarWhereInput[]
+  export type DocumentUpdateManyWithoutWarehouseNestedInput = {
+    create?: XOR<DocumentCreateWithoutWarehouseInput, DocumentUncheckedCreateWithoutWarehouseInput> | DocumentCreateWithoutWarehouseInput[] | DocumentUncheckedCreateWithoutWarehouseInput[]
+    connectOrCreate?: DocumentCreateOrConnectWithoutWarehouseInput | DocumentCreateOrConnectWithoutWarehouseInput[]
+    upsert?: DocumentUpsertWithWhereUniqueWithoutWarehouseInput | DocumentUpsertWithWhereUniqueWithoutWarehouseInput[]
+    createMany?: DocumentCreateManyWarehouseInputEnvelope
+    set?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    disconnect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    delete?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    connect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    update?: DocumentUpdateWithWhereUniqueWithoutWarehouseInput | DocumentUpdateWithWhereUniqueWithoutWarehouseInput[]
+    updateMany?: DocumentUpdateManyWithWhereWithoutWarehouseInput | DocumentUpdateManyWithWhereWithoutWarehouseInput[]
+    deleteMany?: DocumentScalarWhereInput | DocumentScalarWhereInput[]
   }
 
-  export type MovementUncheckedUpdateManyWithoutWarehouseNestedInput = {
-    create?: XOR<MovementCreateWithoutWarehouseInput, MovementUncheckedCreateWithoutWarehouseInput> | MovementCreateWithoutWarehouseInput[] | MovementUncheckedCreateWithoutWarehouseInput[]
-    connectOrCreate?: MovementCreateOrConnectWithoutWarehouseInput | MovementCreateOrConnectWithoutWarehouseInput[]
-    upsert?: MovementUpsertWithWhereUniqueWithoutWarehouseInput | MovementUpsertWithWhereUniqueWithoutWarehouseInput[]
-    createMany?: MovementCreateManyWarehouseInputEnvelope
-    set?: MovementWhereUniqueInput | MovementWhereUniqueInput[]
-    disconnect?: MovementWhereUniqueInput | MovementWhereUniqueInput[]
-    delete?: MovementWhereUniqueInput | MovementWhereUniqueInput[]
-    connect?: MovementWhereUniqueInput | MovementWhereUniqueInput[]
-    update?: MovementUpdateWithWhereUniqueWithoutWarehouseInput | MovementUpdateWithWhereUniqueWithoutWarehouseInput[]
-    updateMany?: MovementUpdateManyWithWhereWithoutWarehouseInput | MovementUpdateManyWithWhereWithoutWarehouseInput[]
-    deleteMany?: MovementScalarWhereInput | MovementScalarWhereInput[]
+  export type DocumentUncheckedUpdateManyWithoutWarehouseNestedInput = {
+    create?: XOR<DocumentCreateWithoutWarehouseInput, DocumentUncheckedCreateWithoutWarehouseInput> | DocumentCreateWithoutWarehouseInput[] | DocumentUncheckedCreateWithoutWarehouseInput[]
+    connectOrCreate?: DocumentCreateOrConnectWithoutWarehouseInput | DocumentCreateOrConnectWithoutWarehouseInput[]
+    upsert?: DocumentUpsertWithWhereUniqueWithoutWarehouseInput | DocumentUpsertWithWhereUniqueWithoutWarehouseInput[]
+    createMany?: DocumentCreateManyWarehouseInputEnvelope
+    set?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    disconnect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    delete?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    connect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    update?: DocumentUpdateWithWhereUniqueWithoutWarehouseInput | DocumentUpdateWithWhereUniqueWithoutWarehouseInput[]
+    updateMany?: DocumentUpdateManyWithWhereWithoutWarehouseInput | DocumentUpdateManyWithWhereWithoutWarehouseInput[]
+    deleteMany?: DocumentScalarWhereInput | DocumentScalarWhereInput[]
   }
 
   export type MovementCreateNestedManyWithoutUserInput = {
@@ -8114,12 +10742,6 @@ export namespace Prisma {
     deleteMany?: MovementScalarWhereInput | MovementScalarWhereInput[]
   }
 
-  export type WarehouseCreateNestedOneWithoutInventoryMovementInput = {
-    create?: XOR<WarehouseCreateWithoutInventoryMovementInput, WarehouseUncheckedCreateWithoutInventoryMovementInput>
-    connectOrCreate?: WarehouseCreateOrConnectWithoutInventoryMovementInput
-    connect?: WarehouseWhereUniqueInput
-  }
-
   export type UserCreateNestedOneWithoutMovementInput = {
     create?: XOR<UserCreateWithoutMovementInput, UserUncheckedCreateWithoutMovementInput>
     connectOrCreate?: UserCreateOrConnectWithoutMovementInput
@@ -8133,6 +10755,13 @@ export namespace Prisma {
     connect?: MovementDetailWhereUniqueInput | MovementDetailWhereUniqueInput[]
   }
 
+  export type ConsecutiveCreateNestedManyWithoutMovementInput = {
+    create?: XOR<ConsecutiveCreateWithoutMovementInput, ConsecutiveUncheckedCreateWithoutMovementInput> | ConsecutiveCreateWithoutMovementInput[] | ConsecutiveUncheckedCreateWithoutMovementInput[]
+    connectOrCreate?: ConsecutiveCreateOrConnectWithoutMovementInput | ConsecutiveCreateOrConnectWithoutMovementInput[]
+    createMany?: ConsecutiveCreateManyMovementInputEnvelope
+    connect?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+  }
+
   export type MovementDetailUncheckedCreateNestedManyWithoutMovementInput = {
     create?: XOR<MovementDetailCreateWithoutMovementInput, MovementDetailUncheckedCreateWithoutMovementInput> | MovementDetailCreateWithoutMovementInput[] | MovementDetailUncheckedCreateWithoutMovementInput[]
     connectOrCreate?: MovementDetailCreateOrConnectWithoutMovementInput | MovementDetailCreateOrConnectWithoutMovementInput[]
@@ -8140,20 +10769,15 @@ export namespace Prisma {
     connect?: MovementDetailWhereUniqueInput | MovementDetailWhereUniqueInput[]
   }
 
-  export type EnumMovementTypeFieldUpdateOperationsInput = {
-    set?: $Enums.MovementType
+  export type ConsecutiveUncheckedCreateNestedManyWithoutMovementInput = {
+    create?: XOR<ConsecutiveCreateWithoutMovementInput, ConsecutiveUncheckedCreateWithoutMovementInput> | ConsecutiveCreateWithoutMovementInput[] | ConsecutiveUncheckedCreateWithoutMovementInput[]
+    connectOrCreate?: ConsecutiveCreateOrConnectWithoutMovementInput | ConsecutiveCreateOrConnectWithoutMovementInput[]
+    createMany?: ConsecutiveCreateManyMovementInputEnvelope
+    connect?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
   }
 
   export type EnumMovementStatusFieldUpdateOperationsInput = {
     set?: $Enums.MovementStatus
-  }
-
-  export type WarehouseUpdateOneRequiredWithoutInventoryMovementNestedInput = {
-    create?: XOR<WarehouseCreateWithoutInventoryMovementInput, WarehouseUncheckedCreateWithoutInventoryMovementInput>
-    connectOrCreate?: WarehouseCreateOrConnectWithoutInventoryMovementInput
-    upsert?: WarehouseUpsertWithoutInventoryMovementInput
-    connect?: WarehouseWhereUniqueInput
-    update?: XOR<XOR<WarehouseUpdateToOneWithWhereWithoutInventoryMovementInput, WarehouseUpdateWithoutInventoryMovementInput>, WarehouseUncheckedUpdateWithoutInventoryMovementInput>
   }
 
   export type UserUpdateOneRequiredWithoutMovementNestedInput = {
@@ -8178,6 +10802,20 @@ export namespace Prisma {
     deleteMany?: MovementDetailScalarWhereInput | MovementDetailScalarWhereInput[]
   }
 
+  export type ConsecutiveUpdateManyWithoutMovementNestedInput = {
+    create?: XOR<ConsecutiveCreateWithoutMovementInput, ConsecutiveUncheckedCreateWithoutMovementInput> | ConsecutiveCreateWithoutMovementInput[] | ConsecutiveUncheckedCreateWithoutMovementInput[]
+    connectOrCreate?: ConsecutiveCreateOrConnectWithoutMovementInput | ConsecutiveCreateOrConnectWithoutMovementInput[]
+    upsert?: ConsecutiveUpsertWithWhereUniqueWithoutMovementInput | ConsecutiveUpsertWithWhereUniqueWithoutMovementInput[]
+    createMany?: ConsecutiveCreateManyMovementInputEnvelope
+    set?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    disconnect?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    delete?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    connect?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    update?: ConsecutiveUpdateWithWhereUniqueWithoutMovementInput | ConsecutiveUpdateWithWhereUniqueWithoutMovementInput[]
+    updateMany?: ConsecutiveUpdateManyWithWhereWithoutMovementInput | ConsecutiveUpdateManyWithWhereWithoutMovementInput[]
+    deleteMany?: ConsecutiveScalarWhereInput | ConsecutiveScalarWhereInput[]
+  }
+
   export type MovementDetailUncheckedUpdateManyWithoutMovementNestedInput = {
     create?: XOR<MovementDetailCreateWithoutMovementInput, MovementDetailUncheckedCreateWithoutMovementInput> | MovementDetailCreateWithoutMovementInput[] | MovementDetailUncheckedCreateWithoutMovementInput[]
     connectOrCreate?: MovementDetailCreateOrConnectWithoutMovementInput | MovementDetailCreateOrConnectWithoutMovementInput[]
@@ -8190,6 +10828,20 @@ export namespace Prisma {
     update?: MovementDetailUpdateWithWhereUniqueWithoutMovementInput | MovementDetailUpdateWithWhereUniqueWithoutMovementInput[]
     updateMany?: MovementDetailUpdateManyWithWhereWithoutMovementInput | MovementDetailUpdateManyWithWhereWithoutMovementInput[]
     deleteMany?: MovementDetailScalarWhereInput | MovementDetailScalarWhereInput[]
+  }
+
+  export type ConsecutiveUncheckedUpdateManyWithoutMovementNestedInput = {
+    create?: XOR<ConsecutiveCreateWithoutMovementInput, ConsecutiveUncheckedCreateWithoutMovementInput> | ConsecutiveCreateWithoutMovementInput[] | ConsecutiveUncheckedCreateWithoutMovementInput[]
+    connectOrCreate?: ConsecutiveCreateOrConnectWithoutMovementInput | ConsecutiveCreateOrConnectWithoutMovementInput[]
+    upsert?: ConsecutiveUpsertWithWhereUniqueWithoutMovementInput | ConsecutiveUpsertWithWhereUniqueWithoutMovementInput[]
+    createMany?: ConsecutiveCreateManyMovementInputEnvelope
+    set?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    disconnect?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    delete?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    connect?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    update?: ConsecutiveUpdateWithWhereUniqueWithoutMovementInput | ConsecutiveUpdateWithWhereUniqueWithoutMovementInput[]
+    updateMany?: ConsecutiveUpdateManyWithWhereWithoutMovementInput | ConsecutiveUpdateManyWithWhereWithoutMovementInput[]
+    deleteMany?: ConsecutiveScalarWhereInput | ConsecutiveScalarWhereInput[]
   }
 
   export type MovementCreateNestedOneWithoutMovementDetailInput = {
@@ -8218,6 +10870,98 @@ export namespace Prisma {
     upsert?: ProductUpsertWithoutMovementDetailInput
     connect?: ProductWhereUniqueInput
     update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutMovementDetailInput, ProductUpdateWithoutMovementDetailInput>, ProductUncheckedUpdateWithoutMovementDetailInput>
+  }
+
+  export type WarehouseCreateNestedOneWithoutDocumentInput = {
+    create?: XOR<WarehouseCreateWithoutDocumentInput, WarehouseUncheckedCreateWithoutDocumentInput>
+    connectOrCreate?: WarehouseCreateOrConnectWithoutDocumentInput
+    connect?: WarehouseWhereUniqueInput
+  }
+
+  export type ConsecutiveCreateNestedManyWithoutDocumentInput = {
+    create?: XOR<ConsecutiveCreateWithoutDocumentInput, ConsecutiveUncheckedCreateWithoutDocumentInput> | ConsecutiveCreateWithoutDocumentInput[] | ConsecutiveUncheckedCreateWithoutDocumentInput[]
+    connectOrCreate?: ConsecutiveCreateOrConnectWithoutDocumentInput | ConsecutiveCreateOrConnectWithoutDocumentInput[]
+    createMany?: ConsecutiveCreateManyDocumentInputEnvelope
+    connect?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+  }
+
+  export type ConsecutiveUncheckedCreateNestedManyWithoutDocumentInput = {
+    create?: XOR<ConsecutiveCreateWithoutDocumentInput, ConsecutiveUncheckedCreateWithoutDocumentInput> | ConsecutiveCreateWithoutDocumentInput[] | ConsecutiveUncheckedCreateWithoutDocumentInput[]
+    connectOrCreate?: ConsecutiveCreateOrConnectWithoutDocumentInput | ConsecutiveCreateOrConnectWithoutDocumentInput[]
+    createMany?: ConsecutiveCreateManyDocumentInputEnvelope
+    connect?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+  }
+
+  export type EnumMovementTypeFieldUpdateOperationsInput = {
+    set?: $Enums.MovementType
+  }
+
+  export type EnumDocumentStatusFieldUpdateOperationsInput = {
+    set?: $Enums.DocumentStatus
+  }
+
+  export type WarehouseUpdateOneRequiredWithoutDocumentNestedInput = {
+    create?: XOR<WarehouseCreateWithoutDocumentInput, WarehouseUncheckedCreateWithoutDocumentInput>
+    connectOrCreate?: WarehouseCreateOrConnectWithoutDocumentInput
+    upsert?: WarehouseUpsertWithoutDocumentInput
+    connect?: WarehouseWhereUniqueInput
+    update?: XOR<XOR<WarehouseUpdateToOneWithWhereWithoutDocumentInput, WarehouseUpdateWithoutDocumentInput>, WarehouseUncheckedUpdateWithoutDocumentInput>
+  }
+
+  export type ConsecutiveUpdateManyWithoutDocumentNestedInput = {
+    create?: XOR<ConsecutiveCreateWithoutDocumentInput, ConsecutiveUncheckedCreateWithoutDocumentInput> | ConsecutiveCreateWithoutDocumentInput[] | ConsecutiveUncheckedCreateWithoutDocumentInput[]
+    connectOrCreate?: ConsecutiveCreateOrConnectWithoutDocumentInput | ConsecutiveCreateOrConnectWithoutDocumentInput[]
+    upsert?: ConsecutiveUpsertWithWhereUniqueWithoutDocumentInput | ConsecutiveUpsertWithWhereUniqueWithoutDocumentInput[]
+    createMany?: ConsecutiveCreateManyDocumentInputEnvelope
+    set?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    disconnect?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    delete?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    connect?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    update?: ConsecutiveUpdateWithWhereUniqueWithoutDocumentInput | ConsecutiveUpdateWithWhereUniqueWithoutDocumentInput[]
+    updateMany?: ConsecutiveUpdateManyWithWhereWithoutDocumentInput | ConsecutiveUpdateManyWithWhereWithoutDocumentInput[]
+    deleteMany?: ConsecutiveScalarWhereInput | ConsecutiveScalarWhereInput[]
+  }
+
+  export type ConsecutiveUncheckedUpdateManyWithoutDocumentNestedInput = {
+    create?: XOR<ConsecutiveCreateWithoutDocumentInput, ConsecutiveUncheckedCreateWithoutDocumentInput> | ConsecutiveCreateWithoutDocumentInput[] | ConsecutiveUncheckedCreateWithoutDocumentInput[]
+    connectOrCreate?: ConsecutiveCreateOrConnectWithoutDocumentInput | ConsecutiveCreateOrConnectWithoutDocumentInput[]
+    upsert?: ConsecutiveUpsertWithWhereUniqueWithoutDocumentInput | ConsecutiveUpsertWithWhereUniqueWithoutDocumentInput[]
+    createMany?: ConsecutiveCreateManyDocumentInputEnvelope
+    set?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    disconnect?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    delete?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    connect?: ConsecutiveWhereUniqueInput | ConsecutiveWhereUniqueInput[]
+    update?: ConsecutiveUpdateWithWhereUniqueWithoutDocumentInput | ConsecutiveUpdateWithWhereUniqueWithoutDocumentInput[]
+    updateMany?: ConsecutiveUpdateManyWithWhereWithoutDocumentInput | ConsecutiveUpdateManyWithWhereWithoutDocumentInput[]
+    deleteMany?: ConsecutiveScalarWhereInput | ConsecutiveScalarWhereInput[]
+  }
+
+  export type DocumentCreateNestedOneWithoutConsecutiveInput = {
+    create?: XOR<DocumentCreateWithoutConsecutiveInput, DocumentUncheckedCreateWithoutConsecutiveInput>
+    connectOrCreate?: DocumentCreateOrConnectWithoutConsecutiveInput
+    connect?: DocumentWhereUniqueInput
+  }
+
+  export type MovementCreateNestedOneWithoutConsecutiveInput = {
+    create?: XOR<MovementCreateWithoutConsecutiveInput, MovementUncheckedCreateWithoutConsecutiveInput>
+    connectOrCreate?: MovementCreateOrConnectWithoutConsecutiveInput
+    connect?: MovementWhereUniqueInput
+  }
+
+  export type DocumentUpdateOneRequiredWithoutConsecutiveNestedInput = {
+    create?: XOR<DocumentCreateWithoutConsecutiveInput, DocumentUncheckedCreateWithoutConsecutiveInput>
+    connectOrCreate?: DocumentCreateOrConnectWithoutConsecutiveInput
+    upsert?: DocumentUpsertWithoutConsecutiveInput
+    connect?: DocumentWhereUniqueInput
+    update?: XOR<XOR<DocumentUpdateToOneWithWhereWithoutConsecutiveInput, DocumentUpdateWithoutConsecutiveInput>, DocumentUncheckedUpdateWithoutConsecutiveInput>
+  }
+
+  export type MovementUpdateOneRequiredWithoutConsecutiveNestedInput = {
+    create?: XOR<MovementCreateWithoutConsecutiveInput, MovementUncheckedCreateWithoutConsecutiveInput>
+    connectOrCreate?: MovementCreateOrConnectWithoutConsecutiveInput
+    upsert?: MovementUpsertWithoutConsecutiveInput
+    connect?: MovementWhereUniqueInput
+    update?: XOR<XOR<MovementUpdateToOneWithWhereWithoutConsecutiveInput, MovementUpdateWithoutConsecutiveInput>, MovementUncheckedUpdateWithoutConsecutiveInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -8440,6 +11184,23 @@ export namespace Prisma {
     _max?: NestedEnumUserStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumMovementStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.MovementStatus | EnumMovementStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MovementStatus[] | ListEnumMovementStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MovementStatus[] | ListEnumMovementStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMovementStatusFilter<$PrismaModel> | $Enums.MovementStatus
+  }
+
+  export type NestedEnumMovementStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MovementStatus | EnumMovementStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MovementStatus[] | ListEnumMovementStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MovementStatus[] | ListEnumMovementStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMovementStatusWithAggregatesFilter<$PrismaModel> | $Enums.MovementStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMovementStatusFilter<$PrismaModel>
+    _max?: NestedEnumMovementStatusFilter<$PrismaModel>
+  }
+
   export type NestedEnumMovementTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.MovementType | EnumMovementTypeFieldRefInput<$PrismaModel>
     in?: $Enums.MovementType[] | ListEnumMovementTypeFieldRefInput<$PrismaModel>
@@ -8447,11 +11208,11 @@ export namespace Prisma {
     not?: NestedEnumMovementTypeFilter<$PrismaModel> | $Enums.MovementType
   }
 
-  export type NestedEnumMovementStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.MovementStatus | EnumMovementStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.MovementStatus[] | ListEnumMovementStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MovementStatus[] | ListEnumMovementStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumMovementStatusFilter<$PrismaModel> | $Enums.MovementStatus
+  export type NestedEnumDocumentStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.DocumentStatus | EnumDocumentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DocumentStatus[] | ListEnumDocumentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DocumentStatus[] | ListEnumDocumentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDocumentStatusFilter<$PrismaModel> | $Enums.DocumentStatus
   }
 
   export type NestedEnumMovementTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -8464,14 +11225,14 @@ export namespace Prisma {
     _max?: NestedEnumMovementTypeFilter<$PrismaModel>
   }
 
-  export type NestedEnumMovementStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.MovementStatus | EnumMovementStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.MovementStatus[] | ListEnumMovementStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MovementStatus[] | ListEnumMovementStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumMovementStatusWithAggregatesFilter<$PrismaModel> | $Enums.MovementStatus
+  export type NestedEnumDocumentStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DocumentStatus | EnumDocumentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DocumentStatus[] | ListEnumDocumentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DocumentStatus[] | ListEnumDocumentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDocumentStatusWithAggregatesFilter<$PrismaModel> | $Enums.DocumentStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumMovementStatusFilter<$PrismaModel>
-    _max?: NestedEnumMovementStatusFilter<$PrismaModel>
+    _min?: NestedEnumDocumentStatusFilter<$PrismaModel>
+    _max?: NestedEnumDocumentStatusFilter<$PrismaModel>
   }
 
   export type MovementDetailCreateWithoutProductInput = {
@@ -8534,88 +11295,89 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"MovementDetail"> | Date | string
   }
 
-  export type MovementCreateWithoutWarehouseInput = {
+  export type DocumentCreateWithoutWarehouseInput = {
     id?: string
-    totalCost: number
+    name: string
+    prefix: string
+    consecutive: number
     type: $Enums.MovementType
-    status: $Enums.MovementStatus
+    status?: $Enums.DocumentStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutMovementInput
-    MovementDetail?: MovementDetailCreateNestedManyWithoutMovementInput
+    Consecutive?: ConsecutiveCreateNestedManyWithoutDocumentInput
   }
 
-  export type MovementUncheckedCreateWithoutWarehouseInput = {
+  export type DocumentUncheckedCreateWithoutWarehouseInput = {
     id?: string
-    totalCost: number
-    userId: string
+    name: string
+    prefix: string
+    consecutive: number
     type: $Enums.MovementType
-    status: $Enums.MovementStatus
+    status?: $Enums.DocumentStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    MovementDetail?: MovementDetailUncheckedCreateNestedManyWithoutMovementInput
+    Consecutive?: ConsecutiveUncheckedCreateNestedManyWithoutDocumentInput
   }
 
-  export type MovementCreateOrConnectWithoutWarehouseInput = {
-    where: MovementWhereUniqueInput
-    create: XOR<MovementCreateWithoutWarehouseInput, MovementUncheckedCreateWithoutWarehouseInput>
+  export type DocumentCreateOrConnectWithoutWarehouseInput = {
+    where: DocumentWhereUniqueInput
+    create: XOR<DocumentCreateWithoutWarehouseInput, DocumentUncheckedCreateWithoutWarehouseInput>
   }
 
-  export type MovementCreateManyWarehouseInputEnvelope = {
-    data: MovementCreateManyWarehouseInput | MovementCreateManyWarehouseInput[]
+  export type DocumentCreateManyWarehouseInputEnvelope = {
+    data: DocumentCreateManyWarehouseInput | DocumentCreateManyWarehouseInput[]
     skipDuplicates?: boolean
   }
 
-  export type MovementUpsertWithWhereUniqueWithoutWarehouseInput = {
-    where: MovementWhereUniqueInput
-    update: XOR<MovementUpdateWithoutWarehouseInput, MovementUncheckedUpdateWithoutWarehouseInput>
-    create: XOR<MovementCreateWithoutWarehouseInput, MovementUncheckedCreateWithoutWarehouseInput>
+  export type DocumentUpsertWithWhereUniqueWithoutWarehouseInput = {
+    where: DocumentWhereUniqueInput
+    update: XOR<DocumentUpdateWithoutWarehouseInput, DocumentUncheckedUpdateWithoutWarehouseInput>
+    create: XOR<DocumentCreateWithoutWarehouseInput, DocumentUncheckedCreateWithoutWarehouseInput>
   }
 
-  export type MovementUpdateWithWhereUniqueWithoutWarehouseInput = {
-    where: MovementWhereUniqueInput
-    data: XOR<MovementUpdateWithoutWarehouseInput, MovementUncheckedUpdateWithoutWarehouseInput>
+  export type DocumentUpdateWithWhereUniqueWithoutWarehouseInput = {
+    where: DocumentWhereUniqueInput
+    data: XOR<DocumentUpdateWithoutWarehouseInput, DocumentUncheckedUpdateWithoutWarehouseInput>
   }
 
-  export type MovementUpdateManyWithWhereWithoutWarehouseInput = {
-    where: MovementScalarWhereInput
-    data: XOR<MovementUpdateManyMutationInput, MovementUncheckedUpdateManyWithoutWarehouseInput>
+  export type DocumentUpdateManyWithWhereWithoutWarehouseInput = {
+    where: DocumentScalarWhereInput
+    data: XOR<DocumentUpdateManyMutationInput, DocumentUncheckedUpdateManyWithoutWarehouseInput>
   }
 
-  export type MovementScalarWhereInput = {
-    AND?: MovementScalarWhereInput | MovementScalarWhereInput[]
-    OR?: MovementScalarWhereInput[]
-    NOT?: MovementScalarWhereInput | MovementScalarWhereInput[]
-    id?: StringFilter<"Movement"> | string
-    warehouseId?: StringFilter<"Movement"> | string
-    totalCost?: FloatFilter<"Movement"> | number
-    userId?: StringFilter<"Movement"> | string
-    type?: EnumMovementTypeFilter<"Movement"> | $Enums.MovementType
-    status?: EnumMovementStatusFilter<"Movement"> | $Enums.MovementStatus
-    createdAt?: DateTimeFilter<"Movement"> | Date | string
-    updatedAt?: DateTimeFilter<"Movement"> | Date | string
+  export type DocumentScalarWhereInput = {
+    AND?: DocumentScalarWhereInput | DocumentScalarWhereInput[]
+    OR?: DocumentScalarWhereInput[]
+    NOT?: DocumentScalarWhereInput | DocumentScalarWhereInput[]
+    id?: StringFilter<"Document"> | string
+    name?: StringFilter<"Document"> | string
+    prefix?: StringFilter<"Document"> | string
+    consecutive?: IntFilter<"Document"> | number
+    warehouseId?: StringFilter<"Document"> | string
+    type?: EnumMovementTypeFilter<"Document"> | $Enums.MovementType
+    status?: EnumDocumentStatusFilter<"Document"> | $Enums.DocumentStatus
+    createdAt?: DateTimeFilter<"Document"> | Date | string
+    updatedAt?: DateTimeFilter<"Document"> | Date | string
   }
 
   export type MovementCreateWithoutUserInput = {
     id?: string
     totalCost: number
-    type: $Enums.MovementType
     status: $Enums.MovementStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    warehouse: WarehouseCreateNestedOneWithoutInventoryMovementInput
     MovementDetail?: MovementDetailCreateNestedManyWithoutMovementInput
+    Consecutive?: ConsecutiveCreateNestedManyWithoutMovementInput
   }
 
   export type MovementUncheckedCreateWithoutUserInput = {
     id?: string
-    warehouseId: string
     totalCost: number
-    type: $Enums.MovementType
     status: $Enums.MovementStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     MovementDetail?: MovementDetailUncheckedCreateNestedManyWithoutMovementInput
+    Consecutive?: ConsecutiveUncheckedCreateNestedManyWithoutMovementInput
   }
 
   export type MovementCreateOrConnectWithoutUserInput = {
@@ -8644,27 +11406,16 @@ export namespace Prisma {
     data: XOR<MovementUpdateManyMutationInput, MovementUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type WarehouseCreateWithoutInventoryMovementInput = {
-    id?: string
-    name: string
-    location: string
-    status?: $Enums.WarehouseStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type WarehouseUncheckedCreateWithoutInventoryMovementInput = {
-    id?: string
-    name: string
-    location: string
-    status?: $Enums.WarehouseStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type WarehouseCreateOrConnectWithoutInventoryMovementInput = {
-    where: WarehouseWhereUniqueInput
-    create: XOR<WarehouseCreateWithoutInventoryMovementInput, WarehouseUncheckedCreateWithoutInventoryMovementInput>
+  export type MovementScalarWhereInput = {
+    AND?: MovementScalarWhereInput | MovementScalarWhereInput[]
+    OR?: MovementScalarWhereInput[]
+    NOT?: MovementScalarWhereInput | MovementScalarWhereInput[]
+    id?: StringFilter<"Movement"> | string
+    totalCost?: FloatFilter<"Movement"> | number
+    userId?: StringFilter<"Movement"> | string
+    status?: EnumMovementStatusFilter<"Movement"> | $Enums.MovementStatus
+    createdAt?: DateTimeFilter<"Movement"> | Date | string
+    updatedAt?: DateTimeFilter<"Movement"> | Date | string
   }
 
   export type UserCreateWithoutMovementInput = {
@@ -8724,33 +11475,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type WarehouseUpsertWithoutInventoryMovementInput = {
-    update: XOR<WarehouseUpdateWithoutInventoryMovementInput, WarehouseUncheckedUpdateWithoutInventoryMovementInput>
-    create: XOR<WarehouseCreateWithoutInventoryMovementInput, WarehouseUncheckedCreateWithoutInventoryMovementInput>
-    where?: WarehouseWhereInput
+  export type ConsecutiveCreateWithoutMovementInput = {
+    id?: string
+    idDocument: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    document: DocumentCreateNestedOneWithoutConsecutiveInput
   }
 
-  export type WarehouseUpdateToOneWithWhereWithoutInventoryMovementInput = {
-    where?: WarehouseWhereInput
-    data: XOR<WarehouseUpdateWithoutInventoryMovementInput, WarehouseUncheckedUpdateWithoutInventoryMovementInput>
+  export type ConsecutiveUncheckedCreateWithoutMovementInput = {
+    id?: string
+    idDocument: string
+    documentId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type WarehouseUpdateWithoutInventoryMovementInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    status?: EnumWarehouseStatusFieldUpdateOperationsInput | $Enums.WarehouseStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type ConsecutiveCreateOrConnectWithoutMovementInput = {
+    where: ConsecutiveWhereUniqueInput
+    create: XOR<ConsecutiveCreateWithoutMovementInput, ConsecutiveUncheckedCreateWithoutMovementInput>
   }
 
-  export type WarehouseUncheckedUpdateWithoutInventoryMovementInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    status?: EnumWarehouseStatusFieldUpdateOperationsInput | $Enums.WarehouseStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type ConsecutiveCreateManyMovementInputEnvelope = {
+    data: ConsecutiveCreateManyMovementInput | ConsecutiveCreateManyMovementInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserUpsertWithoutMovementInput = {
@@ -8802,26 +11550,52 @@ export namespace Prisma {
     data: XOR<MovementDetailUpdateManyMutationInput, MovementDetailUncheckedUpdateManyWithoutMovementInput>
   }
 
+  export type ConsecutiveUpsertWithWhereUniqueWithoutMovementInput = {
+    where: ConsecutiveWhereUniqueInput
+    update: XOR<ConsecutiveUpdateWithoutMovementInput, ConsecutiveUncheckedUpdateWithoutMovementInput>
+    create: XOR<ConsecutiveCreateWithoutMovementInput, ConsecutiveUncheckedCreateWithoutMovementInput>
+  }
+
+  export type ConsecutiveUpdateWithWhereUniqueWithoutMovementInput = {
+    where: ConsecutiveWhereUniqueInput
+    data: XOR<ConsecutiveUpdateWithoutMovementInput, ConsecutiveUncheckedUpdateWithoutMovementInput>
+  }
+
+  export type ConsecutiveUpdateManyWithWhereWithoutMovementInput = {
+    where: ConsecutiveScalarWhereInput
+    data: XOR<ConsecutiveUpdateManyMutationInput, ConsecutiveUncheckedUpdateManyWithoutMovementInput>
+  }
+
+  export type ConsecutiveScalarWhereInput = {
+    AND?: ConsecutiveScalarWhereInput | ConsecutiveScalarWhereInput[]
+    OR?: ConsecutiveScalarWhereInput[]
+    NOT?: ConsecutiveScalarWhereInput | ConsecutiveScalarWhereInput[]
+    id?: StringFilter<"Consecutive"> | string
+    idDocument?: StringFilter<"Consecutive"> | string
+    documentId?: StringFilter<"Consecutive"> | string
+    movementId?: StringFilter<"Consecutive"> | string
+    createdAt?: DateTimeFilter<"Consecutive"> | Date | string
+    updatedAt?: DateTimeFilter<"Consecutive"> | Date | string
+  }
+
   export type MovementCreateWithoutMovementDetailInput = {
     id?: string
     totalCost: number
-    type: $Enums.MovementType
     status: $Enums.MovementStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    warehouse: WarehouseCreateNestedOneWithoutInventoryMovementInput
     user: UserCreateNestedOneWithoutMovementInput
+    Consecutive?: ConsecutiveCreateNestedManyWithoutMovementInput
   }
 
   export type MovementUncheckedCreateWithoutMovementDetailInput = {
     id?: string
-    warehouseId: string
     totalCost: number
     userId: string
-    type: $Enums.MovementType
     status: $Enums.MovementStatus
     createdAt?: Date | string
     updatedAt?: Date | string
+    Consecutive?: ConsecutiveUncheckedCreateNestedManyWithoutMovementInput
   }
 
   export type MovementCreateOrConnectWithoutMovementDetailInput = {
@@ -8874,23 +11648,21 @@ export namespace Prisma {
   export type MovementUpdateWithoutMovementDetailInput = {
     id?: StringFieldUpdateOperationsInput | string
     totalCost?: FloatFieldUpdateOperationsInput | number
-    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
     status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    warehouse?: WarehouseUpdateOneRequiredWithoutInventoryMovementNestedInput
     user?: UserUpdateOneRequiredWithoutMovementNestedInput
+    Consecutive?: ConsecutiveUpdateManyWithoutMovementNestedInput
   }
 
   export type MovementUncheckedUpdateWithoutMovementDetailInput = {
     id?: StringFieldUpdateOperationsInput | string
-    warehouseId?: StringFieldUpdateOperationsInput | string
     totalCost?: FloatFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
-    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
     status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Consecutive?: ConsecutiveUncheckedUpdateManyWithoutMovementNestedInput
   }
 
   export type ProductUpsertWithoutMovementDetailInput = {
@@ -8928,6 +11700,220 @@ export namespace Prisma {
     status?: EnumProductStatusFieldUpdateOperationsInput | $Enums.ProductStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WarehouseCreateWithoutDocumentInput = {
+    id?: string
+    name: string
+    location: string
+    status?: $Enums.WarehouseStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WarehouseUncheckedCreateWithoutDocumentInput = {
+    id?: string
+    name: string
+    location: string
+    status?: $Enums.WarehouseStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WarehouseCreateOrConnectWithoutDocumentInput = {
+    where: WarehouseWhereUniqueInput
+    create: XOR<WarehouseCreateWithoutDocumentInput, WarehouseUncheckedCreateWithoutDocumentInput>
+  }
+
+  export type ConsecutiveCreateWithoutDocumentInput = {
+    id?: string
+    idDocument: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    movement: MovementCreateNestedOneWithoutConsecutiveInput
+  }
+
+  export type ConsecutiveUncheckedCreateWithoutDocumentInput = {
+    id?: string
+    idDocument: string
+    movementId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConsecutiveCreateOrConnectWithoutDocumentInput = {
+    where: ConsecutiveWhereUniqueInput
+    create: XOR<ConsecutiveCreateWithoutDocumentInput, ConsecutiveUncheckedCreateWithoutDocumentInput>
+  }
+
+  export type ConsecutiveCreateManyDocumentInputEnvelope = {
+    data: ConsecutiveCreateManyDocumentInput | ConsecutiveCreateManyDocumentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WarehouseUpsertWithoutDocumentInput = {
+    update: XOR<WarehouseUpdateWithoutDocumentInput, WarehouseUncheckedUpdateWithoutDocumentInput>
+    create: XOR<WarehouseCreateWithoutDocumentInput, WarehouseUncheckedCreateWithoutDocumentInput>
+    where?: WarehouseWhereInput
+  }
+
+  export type WarehouseUpdateToOneWithWhereWithoutDocumentInput = {
+    where?: WarehouseWhereInput
+    data: XOR<WarehouseUpdateWithoutDocumentInput, WarehouseUncheckedUpdateWithoutDocumentInput>
+  }
+
+  export type WarehouseUpdateWithoutDocumentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    status?: EnumWarehouseStatusFieldUpdateOperationsInput | $Enums.WarehouseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WarehouseUncheckedUpdateWithoutDocumentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    status?: EnumWarehouseStatusFieldUpdateOperationsInput | $Enums.WarehouseStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsecutiveUpsertWithWhereUniqueWithoutDocumentInput = {
+    where: ConsecutiveWhereUniqueInput
+    update: XOR<ConsecutiveUpdateWithoutDocumentInput, ConsecutiveUncheckedUpdateWithoutDocumentInput>
+    create: XOR<ConsecutiveCreateWithoutDocumentInput, ConsecutiveUncheckedCreateWithoutDocumentInput>
+  }
+
+  export type ConsecutiveUpdateWithWhereUniqueWithoutDocumentInput = {
+    where: ConsecutiveWhereUniqueInput
+    data: XOR<ConsecutiveUpdateWithoutDocumentInput, ConsecutiveUncheckedUpdateWithoutDocumentInput>
+  }
+
+  export type ConsecutiveUpdateManyWithWhereWithoutDocumentInput = {
+    where: ConsecutiveScalarWhereInput
+    data: XOR<ConsecutiveUpdateManyMutationInput, ConsecutiveUncheckedUpdateManyWithoutDocumentInput>
+  }
+
+  export type DocumentCreateWithoutConsecutiveInput = {
+    id?: string
+    name: string
+    prefix: string
+    consecutive: number
+    type: $Enums.MovementType
+    status?: $Enums.DocumentStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    warehouse: WarehouseCreateNestedOneWithoutDocumentInput
+  }
+
+  export type DocumentUncheckedCreateWithoutConsecutiveInput = {
+    id?: string
+    name: string
+    prefix: string
+    consecutive: number
+    warehouseId: string
+    type: $Enums.MovementType
+    status?: $Enums.DocumentStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DocumentCreateOrConnectWithoutConsecutiveInput = {
+    where: DocumentWhereUniqueInput
+    create: XOR<DocumentCreateWithoutConsecutiveInput, DocumentUncheckedCreateWithoutConsecutiveInput>
+  }
+
+  export type MovementCreateWithoutConsecutiveInput = {
+    id?: string
+    totalCost: number
+    status: $Enums.MovementStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutMovementInput
+    MovementDetail?: MovementDetailCreateNestedManyWithoutMovementInput
+  }
+
+  export type MovementUncheckedCreateWithoutConsecutiveInput = {
+    id?: string
+    totalCost: number
+    userId: string
+    status: $Enums.MovementStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MovementDetail?: MovementDetailUncheckedCreateNestedManyWithoutMovementInput
+  }
+
+  export type MovementCreateOrConnectWithoutConsecutiveInput = {
+    where: MovementWhereUniqueInput
+    create: XOR<MovementCreateWithoutConsecutiveInput, MovementUncheckedCreateWithoutConsecutiveInput>
+  }
+
+  export type DocumentUpsertWithoutConsecutiveInput = {
+    update: XOR<DocumentUpdateWithoutConsecutiveInput, DocumentUncheckedUpdateWithoutConsecutiveInput>
+    create: XOR<DocumentCreateWithoutConsecutiveInput, DocumentUncheckedCreateWithoutConsecutiveInput>
+    where?: DocumentWhereInput
+  }
+
+  export type DocumentUpdateToOneWithWhereWithoutConsecutiveInput = {
+    where?: DocumentWhereInput
+    data: XOR<DocumentUpdateWithoutConsecutiveInput, DocumentUncheckedUpdateWithoutConsecutiveInput>
+  }
+
+  export type DocumentUpdateWithoutConsecutiveInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    prefix?: StringFieldUpdateOperationsInput | string
+    consecutive?: IntFieldUpdateOperationsInput | number
+    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
+    status?: EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    warehouse?: WarehouseUpdateOneRequiredWithoutDocumentNestedInput
+  }
+
+  export type DocumentUncheckedUpdateWithoutConsecutiveInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    prefix?: StringFieldUpdateOperationsInput | string
+    consecutive?: IntFieldUpdateOperationsInput | number
+    warehouseId?: StringFieldUpdateOperationsInput | string
+    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
+    status?: EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MovementUpsertWithoutConsecutiveInput = {
+    update: XOR<MovementUpdateWithoutConsecutiveInput, MovementUncheckedUpdateWithoutConsecutiveInput>
+    create: XOR<MovementCreateWithoutConsecutiveInput, MovementUncheckedCreateWithoutConsecutiveInput>
+    where?: MovementWhereInput
+  }
+
+  export type MovementUpdateToOneWithWhereWithoutConsecutiveInput = {
+    where?: MovementWhereInput
+    data: XOR<MovementUpdateWithoutConsecutiveInput, MovementUncheckedUpdateWithoutConsecutiveInput>
+  }
+
+  export type MovementUpdateWithoutConsecutiveInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMovementNestedInput
+    MovementDetail?: MovementDetailUpdateManyWithoutMovementNestedInput
+  }
+
+  export type MovementUncheckedUpdateWithoutConsecutiveInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalCost?: FloatFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MovementDetail?: MovementDetailUncheckedUpdateManyWithoutMovementNestedInput
   }
 
   export type MovementDetailCreateManyProductInput = {
@@ -8970,53 +11956,55 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MovementCreateManyWarehouseInput = {
+  export type DocumentCreateManyWarehouseInput = {
     id?: string
-    totalCost: number
-    userId: string
+    name: string
+    prefix: string
+    consecutive: number
     type: $Enums.MovementType
-    status: $Enums.MovementStatus
+    status?: $Enums.DocumentStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type MovementUpdateWithoutWarehouseInput = {
+  export type DocumentUpdateWithoutWarehouseInput = {
     id?: StringFieldUpdateOperationsInput | string
-    totalCost?: FloatFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    prefix?: StringFieldUpdateOperationsInput | string
+    consecutive?: IntFieldUpdateOperationsInput | number
     type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
-    status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
+    status?: EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutMovementNestedInput
-    MovementDetail?: MovementDetailUpdateManyWithoutMovementNestedInput
+    Consecutive?: ConsecutiveUpdateManyWithoutDocumentNestedInput
   }
 
-  export type MovementUncheckedUpdateWithoutWarehouseInput = {
+  export type DocumentUncheckedUpdateWithoutWarehouseInput = {
     id?: StringFieldUpdateOperationsInput | string
-    totalCost?: FloatFieldUpdateOperationsInput | number
-    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    prefix?: StringFieldUpdateOperationsInput | string
+    consecutive?: IntFieldUpdateOperationsInput | number
     type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
-    status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
+    status?: EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    MovementDetail?: MovementDetailUncheckedUpdateManyWithoutMovementNestedInput
+    Consecutive?: ConsecutiveUncheckedUpdateManyWithoutDocumentNestedInput
   }
 
-  export type MovementUncheckedUpdateManyWithoutWarehouseInput = {
+  export type DocumentUncheckedUpdateManyWithoutWarehouseInput = {
     id?: StringFieldUpdateOperationsInput | string
-    totalCost?: FloatFieldUpdateOperationsInput | number
-    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    prefix?: StringFieldUpdateOperationsInput | string
+    consecutive?: IntFieldUpdateOperationsInput | number
     type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
-    status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
+    status?: EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MovementCreateManyUserInput = {
     id?: string
-    warehouseId: string
     totalCost: number
-    type: $Enums.MovementType
     status: $Enums.MovementStatus
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9025,30 +12013,26 @@ export namespace Prisma {
   export type MovementUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     totalCost?: FloatFieldUpdateOperationsInput | number
-    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
     status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    warehouse?: WarehouseUpdateOneRequiredWithoutInventoryMovementNestedInput
     MovementDetail?: MovementDetailUpdateManyWithoutMovementNestedInput
+    Consecutive?: ConsecutiveUpdateManyWithoutMovementNestedInput
   }
 
   export type MovementUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    warehouseId?: StringFieldUpdateOperationsInput | string
     totalCost?: FloatFieldUpdateOperationsInput | number
-    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
     status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     MovementDetail?: MovementDetailUncheckedUpdateManyWithoutMovementNestedInput
+    Consecutive?: ConsecutiveUncheckedUpdateManyWithoutMovementNestedInput
   }
 
   export type MovementUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    warehouseId?: StringFieldUpdateOperationsInput | string
     totalCost?: FloatFieldUpdateOperationsInput | number
-    type?: EnumMovementTypeFieldUpdateOperationsInput | $Enums.MovementType
     status?: EnumMovementStatusFieldUpdateOperationsInput | $Enums.MovementStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9060,6 +12044,14 @@ export namespace Prisma {
     quantity: number
     cost: number
     price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConsecutiveCreateManyMovementInput = {
+    id?: string
+    idDocument: string
+    documentId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9094,6 +12086,62 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ConsecutiveUpdateWithoutMovementInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    idDocument?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    document?: DocumentUpdateOneRequiredWithoutConsecutiveNestedInput
+  }
+
+  export type ConsecutiveUncheckedUpdateWithoutMovementInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    idDocument?: StringFieldUpdateOperationsInput | string
+    documentId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsecutiveUncheckedUpdateManyWithoutMovementInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    idDocument?: StringFieldUpdateOperationsInput | string
+    documentId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsecutiveCreateManyDocumentInput = {
+    id?: string
+    idDocument: string
+    movementId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConsecutiveUpdateWithoutDocumentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    idDocument?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    movement?: MovementUpdateOneRequiredWithoutConsecutiveNestedInput
+  }
+
+  export type ConsecutiveUncheckedUpdateWithoutDocumentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    idDocument?: StringFieldUpdateOperationsInput | string
+    movementId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConsecutiveUncheckedUpdateManyWithoutDocumentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    idDocument?: StringFieldUpdateOperationsInput | string
+    movementId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -9116,6 +12164,10 @@ export namespace Prisma {
      */
     export type MovementCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MovementCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use DocumentCountOutputTypeDefaultArgs instead
+     */
+    export type DocumentCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DocumentCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use ProductDefaultArgs instead
      */
     export type ProductArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProductDefaultArgs<ExtArgs>
@@ -9135,6 +12187,14 @@ export namespace Prisma {
      * @deprecated Use MovementDetailDefaultArgs instead
      */
     export type MovementDetailArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MovementDetailDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DocumentDefaultArgs instead
+     */
+    export type DocumentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DocumentDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ConsecutiveDefaultArgs instead
+     */
+    export type ConsecutiveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ConsecutiveDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

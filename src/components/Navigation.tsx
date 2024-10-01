@@ -74,6 +74,9 @@ export function Navigation() {
                                         <DropdownMenuItem>
                                             <Link href="/warehouses">Bodegas</Link>
                                         </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <Link href="/documents">Documentos</Link>
+                                        </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             )}
