@@ -1,21 +1,17 @@
 // /lib/model/movementModel.ts
 
-import { Movement, MovementType, MovementStatus } from '@prisma/client';
+import { Movement, MovementStatus } from '@prisma/client';
 import prisma from '@/lib/prisma';
 
 export async function createMovement(
-    warehouseId: string,
     userId: string,
-    type: MovementType,
     status: MovementStatus,
     totalCost: number,
     details: { productId: string; quantity: number; cost: number; price: number }[]
 ): Promise<Movement> {
     return prisma.movement.create({
         data: {
-            warehouseId,
             userId,
-            type,
             status,
             totalCost,
             MovementDetail: {
@@ -29,7 +25,6 @@ export async function createMovement(
         },
         include: {
             MovementDetail: true,
-            warehouse: true,
             user: true,
         }
     });
@@ -44,7 +39,6 @@ export async function updateMovement(
         data,
         include: {
             MovementDetail: true,
-            warehouse: true,
             user: true,
         }
     });
@@ -53,7 +47,6 @@ export async function updateMovement(
 export async function getAllMovements(): Promise<Movement[]> {
     return prisma.movement.findMany({
         include: {
-            warehouse: true,
             user: true,
             MovementDetail: {
                 include: {
@@ -68,7 +61,6 @@ export async function getMovementById(id: string): Promise<Movement | null> {
     return prisma.movement.findUnique({
         where: { id },
         include: {
-            warehouse: true,
             user: true,
             MovementDetail: {
                 include: {

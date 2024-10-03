@@ -157,10 +157,8 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.MovementScalarFieldEnum = {
   id: 'id',
-  warehouseId: 'warehouseId',
   totalCost: 'totalCost',
   userId: 'userId',
-  type: 'type',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -173,6 +171,27 @@ exports.Prisma.MovementDetailScalarFieldEnum = {
   quantity: 'quantity',
   cost: 'cost',
   price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DocumentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  prefix: 'prefix',
+  consecutive: 'consecutive',
+  warehouseId: 'warehouseId',
+  type: 'type',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ConsecutiveScalarFieldEnum = {
+  id: 'id',
+  idDocument: 'idDocument',
+  documentId: 'documentId',
+  movementId: 'movementId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -213,11 +232,6 @@ exports.UserStatus = exports.$Enums.UserStatus = {
   INACTIVE: 'INACTIVE'
 };
 
-exports.MovementType = exports.$Enums.MovementType = {
-  IN: 'IN',
-  OUT: 'OUT'
-};
-
 exports.MovementStatus = exports.$Enums.MovementStatus = {
   DRAFT: 'DRAFT',
   PENDING: 'PENDING',
@@ -225,12 +239,24 @@ exports.MovementStatus = exports.$Enums.MovementStatus = {
   REJECTED: 'REJECTED'
 };
 
+exports.MovementType = exports.$Enums.MovementType = {
+  IN: 'IN',
+  OUT: 'OUT'
+};
+
+exports.DocumentStatus = exports.$Enums.DocumentStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+};
+
 exports.Prisma.ModelName = {
   Product: 'Product',
   Warehouse: 'Warehouse',
   User: 'User',
   Movement: 'Movement',
-  MovementDetail: 'MovementDetail'
+  MovementDetail: 'MovementDetail',
+  Document: 'Document',
+  Consecutive: 'Consecutive'
 };
 
 /**
