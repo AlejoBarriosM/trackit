@@ -36,8 +36,8 @@ export default function PaginaInicioSesion() {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <Card className="w-[350px]">
+        <div className="flex items-center justify-center">
+            <Card className="w-[400px] ">
                 <CardHeader>
                     <CardTitle>Iniciar sesión en TrackIt</CardTitle>
                     <CardDescription>Ingresa tus credenciales para acceder a tu cuenta</CardDescription>

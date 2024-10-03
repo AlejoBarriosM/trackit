@@ -14,7 +14,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { PlusCircle, Search } from 'lucide-react'
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/components/hooks/use-toast"
 import { DocumentStatus, MovementType } from '@prisma/client'
 
 type Document = {

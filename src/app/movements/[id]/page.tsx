@@ -1,4 +1,4 @@
-// /app/movements/[id]/page.tsx
+// src/app/movements/[id]/page.tsx
 
 'use client'
 
@@ -21,7 +21,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/components/hooks/use-toast"
 import { MovementStatus, MovementType } from '@prisma/client'
 
 type Movement = {
@@ -72,15 +72,31 @@ export default function MovementForm({ params }: { params: { id: string } }) {
     const [warehouses, setWarehouses] = useState<Warehouse[]>([])
     const [documents, setDocuments] = useState<Document[]>([])
     const [products, setProducts] = useState<Product[]>([])
+    const [isLoading, setIsLoading] = useState(true)
     const router = useRouter()
     const { toast } = useToast()
 
     useEffect(() => {
-        if (params.id !== 'new') {
-            fetchMovement(params.id)
+        const fetchData = async () => {
+            setIsLoading(true)
+            try {
+                await Promise.all([
+                    fetchWarehouses(),
+                    fetchProducts(),
+                    params.id !== 'new' ? fetchMovement(params.id) : Promise.resolve()
+                ])
+            } catch (error) {
+                console.error('Error fetching data:', error)
+                toast({
+                    title: "Error",
+                    description: "Hubo un problema al cargar los datos. Por favor, intente de nuevo.",
+                    variant: "destructive",
+                })
+            } finally {
+                setIsLoading(false)
+            }
         }
-        fetchWarehouses()
-        fetchProducts()
+        fetchData()
     }, [params.id])
 
     const fetchMovement = async (id: string) => {
@@ -90,16 +106,15 @@ export default function MovementForm({ params }: { params: { id: string } }) {
             const data = await response.json()
             setMovement(data)
             if (data.warehouseId) {
-                fetchDocuments(data.warehouseId)
+                await fetchDocuments(data.warehouseId)
             }
         } catch (error) {
-            if (error instanceof Error) {
-                toast({
-                    title: "Error",
-                    description: error.message,
-                    variant: "destructive",
-                })
-            }
+            console.error('Error fetching movement:', error)
+            toast({
+                title: "Error",
+                description: "No se pudo cargar el movimiento. Por favor, intente de nuevo.",
+                variant: "destructive",
+            })
         }
     }
 
@@ -110,13 +125,12 @@ export default function MovementForm({ params }: { params: { id: string } }) {
             const data = await response.json()
             setWarehouses(data)
         } catch (error) {
-            if (error instanceof Error) {
-                toast({
-                    title: "Error",
-                    description: error.message,
-                    variant: "destructive",
-                })
-            }
+            console.error('Error fetching warehouses:', error)
+            toast({
+                title: "Error",
+                description: "No se pudieron cargar las bodegas. Por favor, intente de nuevo.",
+                variant: "destructive",
+            })
         }
     }
 
@@ -127,13 +141,12 @@ export default function MovementForm({ params }: { params: { id: string } }) {
             const data = await response.json()
             setDocuments(data)
         } catch (error) {
-            if (error instanceof Error) {
-                toast({
-                    title: "Error",
-                    description: error.message,
-                    variant: "destructive",
-                })
-            }
+            console.error('Error fetching documents:', error)
+            toast({
+                title: "Error",
+                description: "No se pudieron cargar los documentos. Por favor, intente de nuevo.",
+                variant: "destructive",
+            })
         }
     }
 
@@ -144,13 +157,12 @@ export default function MovementForm({ params }: { params: { id: string } }) {
             const data = await response.json()
             setProducts(data)
         } catch (error) {
-            if (error instanceof Error) {
-                toast({
-                    title: "Error",
-                    description: error.message,
-                    variant: "destructive",
-                })
-            }
+            console.error('Error fetching products:', error)
+            toast({
+                title: "Error",
+                description: "No se pudieron cargar los productos. Por favor, intente de nuevo.",
+                variant: "destructive",
+            })
         }
     }
 
@@ -243,11 +255,15 @@ export default function MovementForm({ params }: { params: { id: string } }) {
         setMovement({ ...movement, details: newDetails })
     }
 
+    if (isLoading) {
+        return <div className="flex justify-center items-center h-screen">Cargando...</div>
+    }
+
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-2xl font-bold mb-6">{params.id === 'new' ? 'Nuevo Movimiento' : 'Editar Movimiento'}</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
-                <Select onValueChange={handleWarehouseChange}>
+                <Select onValueChange={handleWarehouseChange} value={movement.warehouseId}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Seleccionar Bodega" />
                     </SelectTrigger>
@@ -258,7 +274,7 @@ export default function MovementForm({ params }: { params: { id: string } }) {
                     </SelectContent>
                 </Select>
 
-                <Select onValueChange={handleDocumentChange} disabled={!movement.warehouseId}>
+                <Select onValueChange={handleDocumentChange} value={movement.documentId} disabled={!movement.warehouseId}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Seleccionar Documento" />
                     </SelectTrigger>
@@ -269,7 +285,7 @@ export default function MovementForm({ params }: { params: { id: string } }) {
                     </SelectContent>
                 </Select>
 
-                <Select onValueChange={(value) => setMovement({ ...movement, status: value as MovementStatus })}>
+                <Select onValueChange={(value) => setMovement({ ...movement, status: value as MovementStatus })} value={movement.status}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Estado" />
                     </SelectTrigger>
@@ -297,7 +313,7 @@ export default function MovementForm({ params }: { params: { id: string } }) {
                         {movement.details.map((detail, index) => (
                             <TableRow key={index}>
                                 <TableCell>
-                                    <Select onValueChange={(value) => handleDetailChange(index, 'productId', value)}>
+                                    <Select onValueChange={(value) => handleDetailChange(index, 'productId', value)} value={detail.productId}>
                                         <SelectTrigger className="w-full">
                                             <SelectValue placeholder="Seleccionar Producto" />
                                         </SelectTrigger>

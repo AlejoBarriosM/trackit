@@ -13,7 +13,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { useToast } from "@/hooks/use-toast"
+import { FormLabel } from "@/components/ui/form"
+import { useToast } from "@/components/hooks/use-toast"
 import { DocumentStatus, MovementType } from '@prisma/client'
 
 type Document = {
@@ -35,7 +36,7 @@ export default function DocumentForm({ params }: { params: { id: string } }) {
     const [document, setDocument] = useState<Document>({
         name: '',
         prefix: '',
-        consecutive: 1,
+        consecutive: 0,
         warehouseId: '',
         type: MovementType.IN,
         status: DocumentStatus.ACTIVE
@@ -123,28 +124,35 @@ export default function DocumentForm({ params }: { params: { id: string } }) {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 w-[600px]">
             <h1 className="text-2xl font-bold mb-6">{params.id === 'new' ? 'Nuevo Documento' : 'Editar Documento'}</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
+                <label htmlFor="name">Nombre del documento</label>
                 <Input
+                    id="name"
                     type="text"
                     placeholder="Nombre del documento"
                     value={document.name}
                     onChange={(e) => setDocument({ ...document, name: e.target.value })}
                 />
+                <label htmlFor="prefix">Prefijo</label>
                 <Input
+                    id="prefix"
                     type="text"
                     placeholder="Prefijo"
                     value={document.prefix}
                     onChange={(e) => setDocument({ ...document, prefix: e.target.value })}
                 />
+                <label htmlFor="consecutive">Consecutivo</label>
                 <Input
+                    id="consecutive"
                     type="number"
                     placeholder="Consecutivo"
                     value={document.consecutive}
                     onChange={(e) => setDocument({ ...document, consecutive: parseInt(e.target.value) })}
                 />
-                <Select onValueChange={(value) => setDocument({ ...document, warehouseId: value })}>
+                <label htmlFor="warehouse">Bodega</label>
+                <Select value={document.warehouseId} onValueChange={(value) => setDocument({ ...document, warehouseId: value })}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Seleccionar Bodega" />
                     </SelectTrigger>
@@ -154,7 +162,8 @@ export default function DocumentForm({ params }: { params: { id: string } }) {
                         ))}
                     </SelectContent>
                 </Select>
-                <Select onValueChange={(value) => setDocument({ ...document, type: value as MovementType })}>
+                <label htmlFor="type">Tipo de Movimiento</label>
+                <Select onValueChange={(value) => setDocument({ ...document, type: value as MovementType })} value={document.type}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Tipo de Movimiento" />
                     </SelectTrigger>
@@ -163,7 +172,8 @@ export default function DocumentForm({ params }: { params: { id: string } }) {
                         <SelectItem value={MovementType.OUT}>Salida</SelectItem>
                     </SelectContent>
                 </Select>
-                <Select onValueChange={(value) => setDocument({ ...document, status: value as DocumentStatus })}>
+                <label htmlFor="status">Estado</label>
+                <Select onValueChange={(value) => setDocument({ ...document, status: value as DocumentStatus })} value={document.status}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Estado" />
                     </SelectTrigger>

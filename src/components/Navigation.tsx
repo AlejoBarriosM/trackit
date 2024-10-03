@@ -1,29 +1,30 @@
 'use client'
 
 import React from 'react'
-import dynamic from 'next/dynamic';
+import Image from 'next/image'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import { Button } from "@/components/ui/button"
 import { useRouter, usePathname } from 'next/navigation'
 import { useTheme } from "next-themes"
-
-import { Moon, Sun, Settings } from "lucide-react"
+import { Moon, Sun, User } from "lucide-react"
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "@/components/ui/avatar"
 
 export function Navigation() {
     const { data: session } = useSession()
     const router = useRouter()
     const pathname = usePathname()
     const { theme, setTheme } = useTheme()
-    const DynamicMoonIcon = dynamic(() => import('lucide-react').then((mod) => mod.Moon), {
-        ssr: false,
-    });
 
     const handleSignOut = async () => {
         await signOut({ redirect: false })
@@ -47,10 +48,17 @@ export function Navigation() {
         )
     }
 
+    function NavigationWrapper() {
+        const pathname = usePathname()
+        if (pathname === '/login') return null
+        return <NavLink href="/login">Iniciar sesión</NavLink>
+    }
+
     return (
         <nav className="bg-gray-800 dark:bg-gray-900 text-white p-4">
             <div className="container mx-auto flex justify-between items-center">
-                <Link href="/" className="text-xl font-bold">
+                <Link href="/" className="text-xl font-bold flex items-center">
+                    <Image src="/inventory.png" alt="TrackIt Logo" width={32} height={32} className="mr-2" />
                     TrackIt
                 </Link>
                 <div className="flex items-center space-x-4">
@@ -63,7 +71,6 @@ export function Navigation() {
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="ghost" size="sm">
-                                            <Settings className="mr-2 h-4 w-4" />
                                             Configuraciones
                                         </Button>
                                     </DropdownMenuTrigger>
@@ -80,16 +87,31 @@ export function Navigation() {
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             )}
-                            <Button onClick={handleSignOut} variant="outline" size="sm">
-                                Cerrar sesión
-                            </Button>
                         </>
                     ) : (
-                        <NavLink href="/login">Iniciar sesión</NavLink>
+                        <NavigationWrapper />
                     )}
-                    <Button variant="ghost" size="icon">
-                        <DynamicMoonIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                    <Button variant="ghost" size="icon" onClick={toggleTheme}>
+                        {theme === 'dark' ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
                     </Button>
+                    {session && (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Avatar>
+                                    <AvatarImage src={session.user.image || ''} alt={session.user.name || ''} />
+                                    <AvatarFallback>{session.user.name?.[0] || <User />}</AvatarFallback>
+                                </Avatar>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem>
+                                    <Link href="/profile">Perfil</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={handleSignOut}>
+                                    Cerrar sesión
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    )}
                 </div>
             </div>
         </nav>
