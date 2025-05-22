@@ -23,7 +23,7 @@ import {
     DialogFooter,
 } from "@/components/ui/dialog"
 import { PlusCircle, Pencil, Archive, ChevronUp, ChevronDown, Search } from 'lucide-react'
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/components/hooks/use-toast"
 
 // Importación dinámica del componente ProductForm
 const ProductForm = dynamic(() => import('./ProductForm'), { ssr: false })

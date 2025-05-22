@@ -3,8 +3,8 @@
 import { NextResponse } from 'next/server';
 import { createMovement, getAllMovements, getMovementById, updateMovement } from '@/lib/model/MovementModel';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../auth/[...nextauth]/route';
-import { MovementType, MovementStatus } from '@prisma/client';
+import { authOptions } from '@/lib/auth';
+import { MovementStatus } from '@prisma/client';
 
 export async function GET(request: Request) {
     const session = await getServerSession(authOptions);
@@ -32,18 +32,16 @@ export async function POST(request: Request) {
 
     try {
         const body = await request.json();
-        const { warehouseId, type, status, totalCost, details } = body;
+        console.log(body);
+        // const { status, totalCost, details } = body;
+        const details = body.MovementDetail
+        const status= body.status;
+        const totalCost = body.totalCost;
 
-        if (!warehouseId) {
-            return NextResponse.json({ error: 'Se requiere el ID de la bodega' }, { status: 400 });
-        }
-        if (!type || !Object.values(MovementType).includes(type)) {
-            return NextResponse.json({ error: 'Tipo de movimiento inválido' }, { status: 400 });
-        }
         if (!status || !Object.values(MovementStatus).includes(status)) {
             return NextResponse.json({ error: 'Estado de movimiento inválido' }, { status: 400 });
         }
-        if (!Array.isArray(details) || details.length === 0) {
+        if (!Array.isArray(body.MovementDetail) || details.length === 0) {
             return NextResponse.json({ error: 'Se requiere al menos un detalle de movimiento' }, { status: 400 });
         }
         if (typeof totalCost !== 'number' || totalCost < 0) {
@@ -58,7 +56,7 @@ export async function POST(request: Request) {
             }
         }
 
-        const movement = await createMovement(warehouseId, session.user.id, type, status, totalCost, details);
+        const movement = await createMovement(session.user.id, status, totalCost, details);
         return NextResponse.json(movement);
     } catch (error) {
         console.error('Error al crear el movimiento:', error);

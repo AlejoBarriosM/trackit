@@ -13,6 +13,9 @@ CREATE TYPE "MovementType" AS ENUM ('IN', 'OUT');
 -- CreateEnum
 CREATE TYPE "MovementStatus" AS ENUM ('DRAFT', 'PENDING', 'APPROVED', 'REJECTED');
 
+-- CreateEnum
+CREATE TYPE "WarehouseStatus" AS ENUM ('ACTIVE', 'INACTIVE', 'ARCHIVED');
+
 -- CreateTable
 CREATE TABLE "Product" (
     "id" TEXT NOT NULL,
@@ -34,6 +37,9 @@ CREATE TABLE "Warehouse" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "location" TEXT NOT NULL,
+    "status" "WarehouseStatus" NOT NULL DEFAULT 'ACTIVE',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Warehouse_pkey" PRIMARY KEY ("id")
 );
