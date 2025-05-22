@@ -64,7 +64,7 @@ export function Navigation() {
                 <div className="flex items-center space-x-4">
                     {session ? (
                         <>
-                            <NavLink href="/dashboard">Dashboard</NavLink>
+                            {/*<NavLink href="/dashboard">Dashboard</NavLink>*/}
                             <NavLink href="/products">Productos</NavLink>
                             <NavLink href="/movements">Movimientos</NavLink>
                             {session.user.role === 'ADMIN' && (

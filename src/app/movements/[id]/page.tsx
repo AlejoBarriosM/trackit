@@ -68,7 +68,7 @@ type Product = {
 export default function MovementForm({ params }: { params: { id: string } }) {
     const [movement, setMovement] = useState<Movement>({
         userId: '',
-        status: MovementStatus.DRAFT,
+        status: MovementStatus.APPROVED,
         totalCost: 0,
         warehouseId: '',
         documentId: '',
@@ -301,17 +301,17 @@ export default function MovementForm({ params }: { params: { id: string } }) {
                     </SelectContent>
                 </Select>
 
-                <Select onValueChange={(value) => setMovement({ ...movement, status: value as MovementStatus })} value={movement.status}>
-                    <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Estado" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value={MovementStatus.DRAFT}>Borrador</SelectItem>
-                        <SelectItem value={MovementStatus.PENDING}>Pendiente</SelectItem>
-                        <SelectItem value={MovementStatus.APPROVED}>Aprobado</SelectItem>
-                        <SelectItem value={MovementStatus.REJECTED}>Rechazado</SelectItem>
-                    </SelectContent>
-                </Select>
+                {/*<Select onValueChange={(value) => setMovement({ ...movement, status: value as MovementStatus })} value={movement.status}>*/}
+                {/*    <SelectTrigger className="w-full">*/}
+                {/*        <SelectValue placeholder="Estado" />*/}
+                {/*    </SelectTrigger>*/}
+                {/*    <SelectContent>*/}
+                {/*        <SelectItem value={MovementStatus.DRAFT}>Borrador</SelectItem>*/}
+                {/*        <SelectItem value={MovementStatus.PENDING}>Pendiente</SelectItem>*/}
+                {/*        <SelectItem value={MovementStatus.APPROVED}>Aprobado</SelectItem>*/}
+                {/*        <SelectItem value={MovementStatus.REJECTED}>Rechazado</SelectItem>*/}
+                {/*    </SelectContent>*/}
+                {/*</Select>*/}
 
                 <h2 className="text-xl font-semibold mt-4 mb-2">Detalles del Movimiento</h2>
                 <Button type="button" onClick={addDetail} className="mb-4">Agregar Detalle</Button>

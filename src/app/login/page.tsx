@@ -30,7 +30,7 @@ export default function PaginaInicioSesion() {
         if (resultado?.error) {
             setError('Correo electrónico o contraseña inválidos')
         } else {
-            const urlRedireccion = searchParams.get('p') || '/dashboard'
+            const urlRedireccion = searchParams.get('p') || '/movements'
             router.push(urlRedireccion)
         }
     }
