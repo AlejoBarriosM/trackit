@@ -32,12 +32,16 @@ export async function POST(request: Request) {
 
     try {
         const body = await request.json();
-        const { status, totalCost, details } = body;
+        console.log(body);
+        // const { status, totalCost, details } = body;
+        const details = body.MovementDetail
+        const status= body.status;
+        const totalCost = body.totalCost;
 
         if (!status || !Object.values(MovementStatus).includes(status)) {
             return NextResponse.json({ error: 'Estado de movimiento inválido' }, { status: 400 });
         }
-        if (!Array.isArray(details) || details.length === 0) {
+        if (!Array.isArray(body.MovementDetail) || details.length === 0) {
             return NextResponse.json({ error: 'Se requiere al menos un detalle de movimiento' }, { status: 400 });
         }
         if (typeof totalCost !== 'number' || totalCost < 0) {

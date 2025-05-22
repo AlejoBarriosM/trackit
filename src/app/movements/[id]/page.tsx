@@ -1,5 +1,3 @@
-// src/app/movements/[id]/page.tsx
-
 'use client'
 
 import React, { useState, useEffect } from 'react'
@@ -32,11 +30,19 @@ type Movement = {
     warehouseId: string
     documentId: string
     type: MovementType
-    details: {
+    createdAt?: string
+    updatedAt?: string
+    MovementDetail: {
+        id?: string
         productId: string
         quantity: number
         cost: number
         price: number
+        product?: {
+            id: string
+            name: string
+            ref: string
+        }
     }[]
 }
 
@@ -67,12 +73,13 @@ export default function MovementForm({ params }: { params: { id: string } }) {
         warehouseId: '',
         documentId: '',
         type: MovementType.IN,
-        details: [{ productId: '', quantity: 0, cost: 0, price: 0 }]
+        MovementDetail: []
     })
     const [warehouses, setWarehouses] = useState<Warehouse[]>([])
     const [documents, setDocuments] = useState<Document[]>([])
     const [products, setProducts] = useState<Product[]>([])
     const [isLoading, setIsLoading] = useState(true)
+    const [isEditing, setIsEditing] = useState(false)
     const router = useRouter()
     const { toast } = useToast()
 
@@ -85,6 +92,7 @@ export default function MovementForm({ params }: { params: { id: string } }) {
                     fetchProducts(),
                     params.id !== 'new' ? fetchMovement(params.id) : Promise.resolve()
                 ])
+                setIsEditing(params.id !== 'new')
             } catch (error) {
                 console.error('Error fetching data:', error)
                 toast({
@@ -104,9 +112,17 @@ export default function MovementForm({ params }: { params: { id: string } }) {
             const response = await fetch(`/api/movements?id=${id}`)
             if (!response.ok) throw new Error('No se pudo cargar el movimiento')
             const data = await response.json()
-            setMovement(data)
-            if (data.warehouseId) {
-                await fetchDocuments(data.warehouseId)
+            console.log('Movimiento cargado:', data)
+            if (data && typeof data === 'object' && data.id) {
+                setMovement({
+                    ...data,
+                    MovementDetail: Array.isArray(data.MovementDetail) ? data.MovementDetail : []
+                })
+                if (data.warehouseId) {
+                    await fetchDocuments(data.warehouseId)
+                }
+            } else {
+                throw new Error('Datos del movimiento inválidos')
             }
         } catch (error) {
             console.error('Error fetching movement:', error)
@@ -172,11 +188,11 @@ export default function MovementForm({ params }: { params: { id: string } }) {
             if (!movement.warehouseId || !movement.documentId) {
                 throw new Error('Debe seleccionar una bodega y un documento')
             }
-            if (movement.details.length === 0) {
+            if (movement.MovementDetail.length === 0) {
                 throw new Error('Debe agregar al menos un detalle al movimiento')
             }
 
-            movement.details.forEach((detail, index) => {
+            movement.MovementDetail.forEach((detail, index) => {
                 if (!detail.productId) {
                     throw new Error(`Debe seleccionar un producto para el detalle ${index + 1}`)
                 }
@@ -188,15 +204,15 @@ export default function MovementForm({ params }: { params: { id: string } }) {
                 }
             })
 
-            const totalCost = movement.details.reduce((sum, detail) => sum + (detail.quantity * (movement.type === MovementType.IN ? detail.cost : detail.price)), 0)
+            const totalCost = movement.MovementDetail.reduce((sum, detail) => sum + (detail.quantity * (movement.type === MovementType.IN ? detail.cost : detail.price)), 0)
 
             const movementData = {
                 ...movement,
                 totalCost,
             }
 
-            const url = params.id === 'new' ? '/api/movements' : `/api/movements?id=${params.id}`
-            const method = params.id === 'new' ? 'POST' : 'PUT'
+            const url = isEditing ? `/api/movements?id=${params.id}` : '/api/movements'
+            const method = isEditing ? 'PUT' : 'POST'
 
             const response = await fetch(url, {
                 method,
@@ -211,7 +227,7 @@ export default function MovementForm({ params }: { params: { id: string } }) {
 
             toast({
                 title: "Éxito",
-                description: "Movimiento guardado correctamente",
+                description: `Movimiento ${isEditing ? 'actualizado' : 'creado'} correctamente`,
             })
             router.push('/movements')
         } catch (error) {
@@ -238,21 +254,21 @@ export default function MovementForm({ params }: { params: { id: string } }) {
     }
 
     const handleDetailChange = (index: number, field: string, value: string | number) => {
-        const newDetails = [...movement.details]
+        const newDetails = [...movement.MovementDetail]
         newDetails[index] = { ...newDetails[index], [field]: value }
-        setMovement({ ...movement, details: newDetails })
+        setMovement({ ...movement, MovementDetail: newDetails })
     }
 
     const addDetail = () => {
         setMovement({
             ...movement,
-            details: [...movement.details, { productId: '', quantity: 0, cost: 0, price: 0 }]
+            MovementDetail: [...movement.MovementDetail, { productId: '', quantity: 0, cost: 0, price: 0 }]
         })
     }
 
     const removeDetail = (index: number) => {
-        const newDetails = movement.details.filter((_, i) => i !== index)
-        setMovement({ ...movement, details: newDetails })
+        const newDetails = movement.MovementDetail.filter((_, i) => i !== index)
+        setMovement({ ...movement, MovementDetail: newDetails })
     }
 
     if (isLoading) {
@@ -261,9 +277,9 @@ export default function MovementForm({ params }: { params: { id: string } }) {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-2xl font-bold mb-6">{params.id === 'new' ? 'Nuevo Movimiento' : 'Editar Movimiento'}</h1>
+            <h1 className="text-2xl font-bold mb-6">{isEditing ? 'Editar Movimiento' : 'Nuevo Movimiento'}</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
-                <Select onValueChange={handleWarehouseChange} value={movement.warehouseId}>
+                <Select onValueChange={handleWarehouseChange} value={movement.warehouseId} disabled={isEditing}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Seleccionar Bodega" />
                     </SelectTrigger>
@@ -274,7 +290,7 @@ export default function MovementForm({ params }: { params: { id: string } }) {
                     </SelectContent>
                 </Select>
 
-                <Select onValueChange={handleDocumentChange} value={movement.documentId} disabled={!movement.warehouseId}>
+                <Select onValueChange={handleDocumentChange} value={movement.documentId} disabled={!movement.warehouseId || isEditing}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Seleccionar Documento" />
                     </SelectTrigger>
@@ -310,16 +326,21 @@ export default function MovementForm({ params }: { params: { id: string } }) {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {movement.details.map((detail, index) => (
+                        {movement.MovementDetail && movement.MovementDetail.map((detail, index) => (
                             <TableRow key={index}>
                                 <TableCell>
-                                    <Select onValueChange={(value) => handleDetailChange(index, 'productId', value)} value={detail.productId}>
+                                    <Select
+                                        onValueChange={(value) => handleDetailChange(index, 'productId', value)}
+                                        value={detail.productId}
+                                    >
                                         <SelectTrigger className="w-full">
                                             <SelectValue placeholder="Seleccionar Producto" />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {products.map((product) => (
-                                                <SelectItem key={product.id} value={product.id}>{product.name}</SelectItem>
+                                                <SelectItem key={product.id} value={product.id}>
+                                                    {product.name}
+                                                </SelectItem>
                                             ))}
                                         </SelectContent>
                                     </Select>
@@ -360,7 +381,10 @@ export default function MovementForm({ params }: { params: { id: string } }) {
                         ))}
                     </TableBody>
                 </Table>
-                <Button type="submit" className="mt-4">Guardar Movimiento</Button>
+
+                <Button type="submit" className="mt-4">
+                    {isEditing ? 'Actualizar Movimiento' : 'Crear Movimiento'}
+                </Button>
             </form>
         </div>
     )
